@@ -1,3 +1,5 @@
 folders
 venv/
 .idea/
+.idea/*
+subtreeGenerator/__pycache__
