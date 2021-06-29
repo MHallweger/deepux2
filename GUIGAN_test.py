@@ -5,15 +5,11 @@ import numpy as np
 import torch
 from torch.autograd import Variable
 from sklearn.decomposition import PCA
-
-
 from GUIGAN_main import generate_samples
 from generator import Generator
 from get_style_emb import read_data,get_ui_info
 from comm import get_bank_size,get_Repository,get_list_wbk
-
 import sys
-
 from modelGenerator.load_data import get_s_app
 
 sys.path.append(r'.\modelGenerator')
@@ -26,8 +22,6 @@ TOTAL_BATCH = 1
 
 POSITIVE_FILE = 'real' 
 EVAL_FILE = 'eval' 
-
-
 
 # Genrator Parameters
 g_emb_dim = 32      # Embedding 
@@ -42,7 +36,7 @@ d_dropout = 0.75
 d_num_class = 2 
 
 bank_dict = {'1':2, '2':6, '3':10, '4':20, '5':35, '6':50, '7':70, '8':100, '9':200, '10':300}
-pre_built = False
+pre_built = True
 
 
 def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements):
@@ -136,6 +130,7 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
             s2.append(u[0])
         train_DT1.append([s1, s2])
         ui_id = ui[0].split('_')[-1].split('.txt')[0]
+
     train_DT0 = train_DT
     train_DT = [x[0] for x in train_DT1]
 
@@ -151,14 +146,15 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
     real_data = []
 
     x_ids2 = [[x[0], x[4],
-               cutted_ui_elements + '\\' + os.path.basename(os.path.dirname(x[4])) + '\\' + os.path.basename(x[4]).split('_')[
-                   0] + '\\' +
+               cutted_ui_elements + '\\' + os.path.basename(os.path.dirname(x[4])) + '\\' + os.path.basename(x[4]).split('_')[0] + '\\' +
                os.path.basename(x[4]).split(os.path.basename(x[4]).split('_')[0] + '_')[-1], x[5]] for x in x_info]
+
     uis = [x[0].split('_')[0] for x in x_ids2]
     uis = list(set(uis))
     uis = sorted(uis, key=lambda x: x)
     fit_ui_banks = []
     real_world_data = []
+
     for ui in uis:
         fit_uis = [x for x in x_ids2 if ui == x[0].split('_')[0]]
         fit_uis = sorted(fit_uis, key=lambda x: (
@@ -214,15 +210,15 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
     #x_ids = [x_ids[i] for i in range(len(x_ids)) if i not in x_index]
 
     x_emb_not_in_info = [x_emb[i] for i in x_index]
-    #x_emb = [x_emb[i] for i in range(len(x_emb)) if i not in x_index]
+   #x_emb = [x_emb[i] for i in range(len(x_emb)) if i not in x_index]
 
     endtime = time.time();
     dtime = endtime - starttime
+
     print("\nTime for unifying x_info and x_emb：%.8s s" % dtime)
     print('\n')
 
     reduced_data1 = PCA(n_components=2).fit_transform(x_emb)
-
 
     generator = Generator(VOCAB_SIZE, g_emb_dim, g_hidden_dim, enable_cuda)
 
@@ -242,22 +238,14 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
     start_st = np.expand_dims(start_st, axis=1)
     start_st = Variable(torch.Tensor(start_st).long())
 
-    # start_st1 = [start_id_list[0] for c in range(BATCH_SIZE)]
-    # start_st1 = np.expand_dims(start_st1, axis=1)
-    # second_st1 = np.expand_dims(second_st1, axis=1)
-    # preb_st = np.concatenate((start_st1, second_st1), axis = 1)
-    # preb_st = Variable(torch.Tensor(preb_st).long())
-
     NEGATIVE_FILE0 = NEGATIVE_FILE
 
     for _id in range(len(real_data_id1)):
         if (_id % 5 == 0):
-            pre_len = 3
+            #if(True):
+            pre_len = 4 ### diese Variable Sorgt dafür das wir so viele schnitte behalten werden.
             pre_s = list(real_data_id1[_id][:pre_len])
             print(real_data[_id][0][0])
-            # # start_st = [pre_s1 for c in range(5)]
-            # pre_s = [pre_s for c in range(BATCH_SIZE)]
-            # pre_s = Variable(torch.Tensor(pre_s).long())
 
             '''generate samples'''
             NEGATIVE_FILE0 = os.path.join(NEGATIVE_FILE, str(_id) + '_' + str(pre_len))
@@ -272,35 +260,10 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
                 samples_lenth = generate_samples(generator, BATCH_SIZE, GENERATED_NUM, NEGATIVE_FILE1,
                                                  x_info, x_ids, start_id_list, end_id_list, bank_dict)
 
-            # fig0 = plt.figure(figsize=(20,4.5), dpi=135)
-            # fig0.subplots_adjust(top=0.95, bottom=0.05, right=0.95)
-
-            # fig0.add_subplot(121)
-            # real_data_lenth = [len(x) for x in real_data_id]
-            # real_data_lenth.sort()
-            # plt.hist(real_data_lenth,10)
-            # plt.legend()
-            # real_data_mean = round(np.mean(real_data_lenth),2)
-            # real_data_var = round(np.var(real_data_lenth),2)
-            # plt.title('Real data lenth, mean:'+str(real_data_mean)+', var: '+str(real_data_var))
-
-            # fig0.add_subplot(122)
-            # samples_lenth.sort()
-            # plt.hist(samples_lenth,10)
-            # plt.legend()
-            # samples_mean = round(np.mean(samples_lenth),2)
-            # samples_var = round(np.var(samples_lenth),2)
-            # plt.title('Samples lenth, mean:'+str(samples_mean)+', var: '+str(samples_var))
-
-            # plt.show()
-
             # -------------------------------------
             '''connect subtrees'''
             from PIL import Image, ImageFont, ImageDraw
-            # from get_real_data2 import generate_img  ## WAR AUSKOMMENTIERT
             path1 = os.path.join(NEGATIVE_FILE0, 'geneimgdir.txt')
-            path2 = os.path.join(NEGATIVE_FILE0, 'samples_0\\') # all WAR AUSKOMMENTIERT
-            path2 = os.path.join(NEGATIVE_FILE0, 'samples_1\\') # fit
 
             _resize = False
             if _resize:
@@ -313,7 +276,6 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
             print("path3:" + path3)
             _n = 0
             if os.path.exists(path1):
-
                 ori_st_dir = cutted_ui_elements;
                 data_file = path1;
                 _path = path2;
@@ -352,20 +314,10 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
                             d0 = os.path.split(d1[0])
                             app = d0[1]
                             app_dir = os.path.join(ori_st_dir, app)
-
                             _input = d1[1]
                             ui = _input.split('_')[0]
-                            ui_dir = os.path.join(app_dir, ui)
                             sd = _input.split(ui + '_')[-1]
-
-                            # print("sd: " + sd)
-                            # print("ui: " + ui)
-                            # print("app_dir: " + app_dir)
-                            ##print("ui_dir: " + ui_dir)
-
                             sd_dir = os.path.join(app_dir, ui + "_" + sd)
-                            # print("NEW sd_dir: " + sd_dir)
-                            # sd_dir = os.path.join(ui_dir,sd)
                             l1.append(sd_dir)
                             if app not in l2:
                                 l2.append(app)
@@ -407,8 +359,7 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
                             sImg = Image.open(lis1[s][st])
                             w, h = sImg.size
                             total_h += h
-                            dImg = sImg.resize((width_size, h),
-                                               Image.ANTIALIAS)  # 设置压缩尺寸和选项，注意尺寸要用括号
+                            dImg = sImg.resize((width_size, h),Image.ANTIALIAS)
                             imagefile.append([dImg, h, lis3[s][st]])
                     i += 1
 
@@ -420,13 +371,10 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
                         c_fit += 1
 
                     _size = 2
-                    target = Image.new('RGB', (width_size, total_h + _size * (imghigh - 1)))  # 最终拼接的图像的大小
+                    target = Image.new('RGB', (width_size, total_h + _size * (imghigh - 1)))
                     left = 0
                     right = 0
-
                     n = 0
-                    font_size = 20
-                    # font = ImageFont.truetype('SIMYOU.TTF',font_size)
                     bank_ = False
                     for image in imagefile:
                         if isinstance(image, int):
@@ -450,17 +398,16 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
                             target.paste(stamp, box)
                             left += _size
                         n += 1
+
                     if not os.path.exists(_path + str(i) + '.jpg'):
                         target_dImg = target.resize((width_size, resize_h), Image.ANTIALIAS)
                         _b = ''
+
                         if bank_ is True:
                             _b = '_wb'
 
-                        ##print("INDEX: " + str(i))
-                        ##print("lines1: " + str(len(lines1)))
-
                         if i < len(lines1):
-                            if _resize:  # resize
+                            if _resize:
                                 if lines1[i].strip() == '-1':
                                     target_dImg.save(
                                         _path + str(i) + '_' + str(imghigh) + _b + '_long_no_end_' + s_name + '.jpg',
@@ -469,14 +416,13 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
                                     target_dImg.save(
                                         _path + str(i) + '_' + str(imghigh) + _b + s_name + '_end_' + lines1[
                                             i].strip() + '.jpg', quality=100)
-                            else:  # no_resize
+                            else:
                                 if lines1[i].strip() == '-1':
                                     target.save(
                                         _path + str(i) + '_' + str(imghigh) + _b + '_long_no_end_' + s_name + '.jpg',
                                         quality=100)
                                 else:
-                                    target.save(_path + str(i) + '_' + str(imghigh) + _b + s_name + '_end_' + lines1[
-                                        i].strip() + '.jpg', quality=100)
+                                    target.save(_path + str(i) + '_' + str(imghigh) + _b + s_name + '_end_' + lines1[i].strip() + '.jpg', quality=100)
 
                 print('\n_total_num: ', total_num)
                 print('_c_one: ', _c_one)
