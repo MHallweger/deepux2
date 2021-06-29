@@ -167,7 +167,7 @@ def save_tree_process(jsns_dir, ui_id, img_dir, tree_dir, db_app_dir, dst_dir):
 
     if Dom_list != []:
         if Dom_list == []:
-            print(ui_id, 'Dom_list is Empt!')
+            print(ui_id, 'Dom_list is Empty!')
         else:
             print('Dom_list.len:', len(Dom_list))
             print('st_bank.len: ', len(st_bank))
@@ -205,7 +205,7 @@ def save_tree_process(jsns_dir, ui_id, img_dir, tree_dir, db_app_dir, dst_dir):
             f1 = open(ui_tree_dir, 'w', encoding='utf-8')  # width, height
             [f1.write(
                 t[0] + t[1] + ':' + str(get_width(t[2])) + '_' + str(get_height(t[2])) + ':' + str(t[2])[1:-1] + ',\n')
-             for t in aTrees]  # 再写入起始坐标
+             for t in aTrees]
             f1.write(';\n')
             for (k, v) in node_tree1.items():
                 f1.write(str(k) + ' ' + str(v) + '\n')
@@ -216,6 +216,7 @@ def save_tree_process(jsns_dir, ui_id, img_dir, tree_dir, db_app_dir, dst_dir):
         [f2.write(c + ',\n') for c in st_bank]
 
 
+# Removes all empty folder of a directory
 def remove_empty_f(apps_dir):
     for app in os.listdir(apps_dir):
         app_dir = os.path.join(apps_dir, app)
@@ -227,7 +228,7 @@ def remove_empty_f(apps_dir):
 # -------------------main start-----------------------------------
 # save_tree_process(jsns_dir,ui_id,tree_dir):
 
-# Zerpflückt die UI von RICO in Einzelteile.
+# Tears the UI of RICO into different parts.
 def save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements,cutted_resized_ui_elements):
     #jsns_dir = r'.\Rico\combined'  # json_dir
     #cd = r'.\P_app_resize_sub'  # GUI_dir ORIGINALEN RICO Bilder
