@@ -56,6 +56,13 @@ def build_ui():
     build_result_uis_button = tk.Button(window, text="build_result_uis_button", command = generate_uis)
     build_result_uis_button.pack()
 
+    build_first_name = tk.Label(window, text="First Name")
+    build_first_name.pack()
+
+    e1 = tk.Entry(window)
+    e1.pack()
+
+
     window.mainloop()
 
 def save_subtree():
