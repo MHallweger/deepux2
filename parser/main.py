@@ -1,16 +1,17 @@
 
 class ViewObj:
 
-    def __init__(self,id,index,space):
+    def __init__(self, id, index, space):
         self.id = id
         self.index = index
         self.spaces = space
         self.children = []
 
+
 def load_file(name):
     listOfViewObj = []
     lines = []
-    file = open(name, "r",encoding="ISO-8859-1", errors='ignore')
+    file = open(name, "r", encoding="ISO-8859-1", errors='ignore')
 
     i = 0
     for line in file:
@@ -19,7 +20,7 @@ def load_file(name):
             print("end of file")
             break
 
-        #Spezieller Fall
+        # Spezieller Fall
         if i == 0 and "}" in line:
             indexOfBracket = line.index('}') + 1
             lineLength = len(line)
@@ -33,43 +34,46 @@ def load_file(name):
     lineIndex = 0
     spaces = 0
     for line in lines:
+        # clean String
+        line = line.replace('\x00', '')
+        line = line.replace('\0', '')
+        line = line.replace('\0', '')
+        line = line.replace('z\4', '')
+
         id = line.lstrip().split()[0].split("@")[1]  ## ID of View
         lineIndex += 1
 
         for char in line:
             if char.isspace() is False:
                 print("ID: " + str(id) + " Spaces: " + str(spaces))
-                listOfViewObj.append(ViewObj(id,lineIndex,spaces))
+                listOfViewObj.append(ViewObj(id, lineIndex, spaces))
                 spaces = 0
                 break
 
             spaces += 1
 
-    matchChilds(listOfViewObj)
-
-
+    matchChildren(listOfViewObj)
 
     lines_splited = []
-    #Split Eigenschaften
+    # Split Eigenschaften
     for line in lines:
-        lines_splited.append(line.split( ))
+        lines_splited.append(line.split())
 
 
-def matchChilds(objects):
-
+def matchChildren(objects):
     for i in range(len(objects)):
         if objects[i].spaces == 0:
             print("Root")
             continue
 
-        print(str(objects[i].id) + " child from : " + str(getParent(objects, i, objects[i].spaces).id))
-        getParent(objects, i, objects[i].spaces).children.append(objects[i])
+        parent = getParent(objects, i, objects[i].spaces)
+        print(str(objects[i].id) + " child from : " + str(parent.id))
+        parent.children.append(objects[i])
 
 
 def getParent(testlist, index, spaces):
-
     while True:
-        if testlist[index].spaces == spaces-1:
+        if testlist[index].spaces == spaces - 1:
             return testlist[index]
         else:
             index -= 1
@@ -77,7 +81,4 @@ def getParent(testlist, index, spaces):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    load_file('test1.li')
-
-
-
+    load_file('test2.li')
