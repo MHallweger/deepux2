@@ -2,7 +2,7 @@ import json
 
 class ViewObj:
 
-    def __init__(self, id,resourceId, index, space,android_class,layout_height,layout_width,location_on_screen_x,location_on_screen_y,visibility):
+    def __init__(self, id,resourceId, index, space,android_class,layout_height,layout_width,location_on_screen_x,location_on_screen_y,visibility,bounds):
         self.id = id
         self.resourceId = resourceId
         self.index = index
@@ -13,7 +13,7 @@ class ViewObj:
         self.layout_width = layout_width
         self.location_on_screen_x = location_on_screen_x
         self.location_on_screen_y = location_on_screen_y
-        self.bounds = [location_on_screen_x,location_on_screen_y,layout_width,layout_height]
+        self.bounds = bounds
         self.children = []
 
 
@@ -54,6 +54,8 @@ def load_file(name):
         getLocationOnScreen_y = -1
         getVisibility = False
         resourceId = -1
+        mLeft = -1
+        mRight = -1
         for attributes in line.lstrip().split():
             if 'getHeight' in attributes:
                 layout_height = attributes.split("=")[1].split(",")[1]
@@ -71,7 +73,17 @@ def load_file(name):
                     getVisibility = False
             elif 'mID' in attributes:
                 resourceId = attributes.split("=")[1].split(",")[1]
+            elif 'mLeft' in attributes:
+                mLeft = attributes.split("=")[1].split(",")[1]
+            elif 'mRight' in attributes:
+                mRight = attributes.split("=")[1].split(",")[1]
+            elif 'mBottom' in attributes:
+                mBottom = attributes.split("=")[1].split(",")[1]
+            elif 'mTop' in attributes:
+                mTop = attributes.split("=")[1].split(",")[1]
 
+
+        bounds = [mLeft,mTop,mRight,mBottom]
 
 
 
@@ -90,7 +102,8 @@ def load_file(name):
                                              layout_width,
                                              getLocationOnScreen_x,
                                              getLocationOnScreen_y,
-                                             getVisibility))
+                                             getVisibility,
+                                             bounds))
                 spaces = 0
                 break
 
@@ -142,4 +155,4 @@ def clearString(string):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    load_file('test7.li')
+    load_file('test8.li')
