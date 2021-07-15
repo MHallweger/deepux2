@@ -1,3 +1,4 @@
+import json
 
 class ViewObj:
 
@@ -52,7 +53,9 @@ def load_file(name):
 
             spaces += 1
 
-    matchChildren(listOfViewObj)
+    listOfViewObj = matchChildren(listOfViewObj)
+    jsonStr = json.dumps(listOfViewObj[0].__dict__)
+    print(jsonStr)
 
     lines_splited = []
     # Split Eigenschaften
@@ -68,17 +71,18 @@ def matchChildren(objects):
 
         parent = getParent(objects, i, objects[i].spaces)
         print(str(objects[i].id) + " child from : " + str(parent.id))
-        parent.children.append(objects[i])
+        parent.children.append(objects[i].__dict__)
 
+    return objects
 
-def getParent(testlist, index, spaces):
+def getParent(objects, index, spaces):
     while True:
-        if testlist[index].spaces == spaces - 1:
-            return testlist[index]
+        if objects[index].spaces == spaces - 1:
+            return objects[index]
         else:
             index -= 1
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    load_file('test2.li')
+    load_file('test1.li')
