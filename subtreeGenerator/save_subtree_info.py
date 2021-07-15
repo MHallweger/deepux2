@@ -237,30 +237,34 @@ def save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elem
     #dsts_dir = r'.\p_app_Td_sts'  # cut subtree imgs
     #resized_dir = r'.\p_app_Td_sts_resized'  # resize subtree imgs
 
-    for app in os.listdir(gui_dir_rico):
-        app_dir = os.path.join(gui_dir_rico, app)
-        dt_app_dir = os.path.join(gui_information_dir, app)
-        db_app_dir = os.path.join(control_elements_id_dir, app)
-        dst_dir = os.path.join(cutted_ui_elements, app)
-        if not os.path.exists(dt_app_dir):
-            os.makedirs(dt_app_dir)
-        if not os.path.exists(db_app_dir):
-            os.makedirs(db_app_dir)
-        for im in os.listdir(app_dir):
-            img_dir = os.path.join(app_dir, im)
-            ui_id = os.path.splitext(im)[0]
-            print("ui_Id: " + ui_id)
-            save_tree_process(json_rico, ui_id, img_dir, dt_app_dir, db_app_dir, dst_dir)
-            original_image = os.path.join(cutted_ui_elements, app)
-            original_image = os.path.join(original_image, im)
-            print("original_image:" + original_image)
-            if os.path.exists(original_image):
-                os.remove(original_image)
-            else:
-                print('no original_image:', original_image)
+    if len(os.listdir(gui_dir_rico))  > 0:
 
-    remove_empty_folder(gui_information_dir)
-    remove_empty_folder(control_elements_id_dir)
+        for app in os.listdir(gui_dir_rico):
+            app_dir = os.path.join(gui_dir_rico, app)
+            dt_app_dir = os.path.join(gui_information_dir, app)
+            db_app_dir = os.path.join(control_elements_id_dir, app)
+            dst_dir = os.path.join(cutted_ui_elements, app)
+            if not os.path.exists(dt_app_dir):
+                os.makedirs(dt_app_dir)
+            if not os.path.exists(db_app_dir):
+                os.makedirs(db_app_dir)
+            for im in os.listdir(app_dir):
+                img_dir = os.path.join(app_dir, im)
+                ui_id = os.path.splitext(im)[0]
+                print("ui_Id: " + ui_id)
+                save_tree_process(json_rico, ui_id, img_dir, dt_app_dir, db_app_dir, dst_dir)
+                original_image = os.path.join(cutted_ui_elements, app)
+                original_image = os.path.join(original_image, im)
+                print("original_image:" + original_image)
+                if os.path.exists(original_image):
+                    os.remove(original_image)
+                else:
+                    print('no original_image:', original_image)
 
-    ImageFile.LOAD_TRUNCATED_IMAGES = True
-    compress_image(cutted_ui_elements, cutted_resized_ui_elements, 512, 256)
+        remove_empty_folder(gui_information_dir)
+        remove_empty_folder(control_elements_id_dir)
+
+        ImageFile.LOAD_TRUNCATED_IMAGES = True
+        compress_image(cutted_ui_elements, cutted_resized_ui_elements, 512, 256)
+    else:
+        print("no rico files")

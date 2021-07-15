@@ -1,5 +1,15 @@
 import json
 
+class Acvitiy:
+    def __init__(self, activityName, root):
+        self.activityName = activityName
+        self.activity = root
+
+class Root:
+    def __init__(self, root):
+        self.root = root
+
+
 class ViewObj:
 
     def __init__(self, id,resourceId, index, space,android_class,layout_height,layout_width,location_on_screen_x,location_on_screen_y,visibility,bounds):
@@ -24,11 +34,17 @@ def load_file(name):
     file = open(name, "r", encoding="ISO-8859-1", errors='ignore')
 
     i = 0
+    title = "empty_tile"
     for line in file:
 
         if "DONE." in line:
             print("end of file")
             break
+
+        if '{' and '}' in line:
+            indexOfBracketOpen = line.index('{') + 1
+            indexOfBracketClosed = line.index('}')
+            title = line[indexOfBracketOpen:indexOfBracketClosed].split(",")[1].split(":")[1].replace("\"", "")
 
         # Spezieller Fall
         if i == 0 and "}" in line:
@@ -83,7 +99,7 @@ def load_file(name):
                 mTop = attributes.split("=")[1].split(",")[1]
 
 
-        bounds = [mLeft,mTop,mRight,mBottom]
+        bounds = [int(mLeft),int(mTop),int(mRight),int(mBottom)]
 
 
 
@@ -109,13 +125,16 @@ def load_file(name):
 
             spaces += 1
 
+    ##title
+
+
+
     listOfViewObj = matchChildren(listOfViewObj)
+    toJson(title,listOfViewObj)
 
-    toJson(listOfViewObj)
-
-def toJson(listOfViewObj):
-    jsonStr = json.dumps(listOfViewObj[0].__dict__)
-
+def toJson(title,listOfViewObj):
+    activiy = Acvitiy(title, Root(listOfViewObj[0].__dict__).__dict__).__dict__
+    jsonStr = json.dumps(activiy)
     jsonStr = jsonStr.replace("visible_to_user","visible-to-user")
     jsonStr = jsonStr.replace("android_class","class")
     print(jsonStr)
