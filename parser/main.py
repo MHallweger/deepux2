@@ -2,14 +2,18 @@ import json
 
 class ViewObj:
 
-    def __init__(self, id, index, space,android_class):
+    def __init__(self, id, index, space,android_class,layout_height,layout_width,location_on_screen_x,location_on_screen_y):
         self.id = id
         self.index = index
         self.spaces = space
-        self.children = []
         self.visible_to_user = True
         self.android_class = android_class
-        self.
+        self.layout_height = layout_height
+        self.layout_width = layout_width
+        self.location_on_screen_x = location_on_screen_x
+        self.location_on_screen_y = location_on_screen_y
+        self.children = []
+
 
 
 def load_file(name):
@@ -42,14 +46,29 @@ def load_file(name):
         line = clearString(line)
 
         id = line.lstrip().split()[0].split("@")[1]  ## ID of View
-        android_class = line.lstrip().split()[0].split("@")[0]  ## class of View
+        android_class = line.lstrip().split()[0].split("@")[0]
+        layout_height = -1
+        layout_width = -1
+        getLocationOnScreen_x = -1
+        getLocationOnScreen_y = -1
+        for attributes in line.lstrip().split():
+            if 'getHeight' in attributes:
+                layout_height = attributes.split("=")[1].split(",")[1]
+            elif 'getWidth' in attributes:
+                layout_width = attributes.split("=")[1].split(",")[1]
+            elif 'getLocationOnScreen_x' in attributes:
+                getLocationOnScreen_x = attributes.split("=")[1].split(",")[1]
+            elif 'getLocationOnScreen_y' in attributes:
+                getLocationOnScreen_y = attributes.split("=")[1].split(",")[1]
+
+
         print(android_class)
         lineIndex += 1
 
         for char in line:
             if char.isspace() is False:
                 print("ID: " + str(id) + " Spaces: " + str(spaces))
-                listOfViewObj.append(ViewObj(id, lineIndex, spaces,android_class))
+                listOfViewObj.append(ViewObj(id, lineIndex, spaces,android_class,layout_height,layout_width,getLocationOnScreen_x,getLocationOnScreen_y))
                 spaces = 0
                 break
 
@@ -97,4 +116,4 @@ def clearString(string):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    load_file('test1.li')
+    load_file('test6.li')
