@@ -4,7 +4,7 @@ from PIL import Image
 from PIL import ImageFile
 
 from subtreeGenerator.get_subtree import get_layerNum, get_resized_bounds, get_height, get_className, \
-    get_component_byjson, get_width, compressImage
+    get_component_byjson, get_width, compress_image
 
 
 def get_clayer_nodes(Dom_list, layer1_ids=[]):
@@ -217,7 +217,7 @@ def save_tree_process(jsns_dir, ui_id, img_dir, tree_dir, db_app_dir, dst_dir):
 
 
 # Removes all empty folder of a directory
-def remove_empty_f(apps_dir):
+def remove_empty_folder(apps_dir):
     for app in os.listdir(apps_dir):
         app_dir = os.path.join(apps_dir, app)
         if not os.listdir(app_dir):  # empty folder
@@ -251,18 +251,16 @@ def save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elem
             ui_id = os.path.splitext(im)[0]
             print("ui_Id: " + ui_id)
             save_tree_process(json_rico, ui_id, img_dir, dt_app_dir, db_app_dir, dst_dir)
-
-            # ori_img = os.path.join(os.path.join(app_dir,im),im+'.jpg')
-            ori_img = os.path.join(cutted_ui_elements, app)
-            ori_img = os.path.join(ori_img, im)
-            print("ori_img:" + ori_img)
-            if os.path.exists(ori_img):
-                os.remove(ori_img)
+            original_image = os.path.join(cutted_ui_elements, app)
+            original_image = os.path.join(original_image, im)
+            print("original_image:" + original_image)
+            if os.path.exists(original_image):
+                os.remove(original_image)
             else:
-                print('no ori_img:', ori_img)
+                print('no original_image:', original_image)
 
-    remove_empty_f(gui_information_dir)
-    remove_empty_f(control_elements_id_dir)
+    remove_empty_folder(gui_information_dir)
+    remove_empty_folder(control_elements_id_dir)
 
     ImageFile.LOAD_TRUNCATED_IMAGES = True
-    compressImage(cutted_ui_elements, cutted_resized_ui_elements, 512, 256)
+    compress_image(cutted_ui_elements, cutted_resized_ui_elements, 512, 256)

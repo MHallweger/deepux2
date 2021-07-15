@@ -5,8 +5,8 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
 
-from GUIGAN_main import build_generator
 from GUIGAN_test import build_result_uis
+from build_generator import build_generator
 from get_style_emb import get_style_emb
 from modelGenerator.load_data import load_data
 from modelGenerator.load_subtrees import load_subtrees

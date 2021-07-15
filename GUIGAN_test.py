@@ -241,8 +241,8 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
     NEGATIVE_FILE0 = NEGATIVE_FILE
 
     for _id in range(len(real_data_id1)):
-        if (_id % 5 == 0):
-            #if(True):
+        #if (_id % 5 == 0):
+        if(True):
             pre_len = 1 ### diese Variable Sorgt dafür das wir so viele schnitte behalten werden.
             pre_s = list(real_data_id1[_id][:pre_len])
             print(real_data[_id][0][0])
