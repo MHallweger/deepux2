@@ -137,6 +137,8 @@ def toJson(title,listOfViewObj):
     jsonStr = json.dumps(activiy)
     jsonStr = jsonStr.replace("visible_to_user","visible-to-user")
     jsonStr = jsonStr.replace("android_class","class")
+    jsonStr = jsonStr.replace("resourceId","resource-id")
+    jsonStr = jsonStr.replace("NO_ID", "")
     print(jsonStr)
 
 def matchChildren(objects):
@@ -174,4 +176,4 @@ def clearString(string):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    load_file('test8.li')
+    load_file('test9.li')

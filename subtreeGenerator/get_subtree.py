@@ -346,12 +346,13 @@ def get_component_byjson(json_file):
     #------------------------------------------------------------------------------------#
     '''delete st without enough area'''
     S0 = 1440 * 2560 / 2 # half area of GUI
+    #S0 = 1080 * 1920 / 2  # half area of GUI
     S = 0
     for x in list_ddsfcutfccb_ch1:
         S += get_width(x[2]) * get_height(x[2])
     if S <= S0:
         print('square unsatisfy')
-        list_ddsfcutfccb_ch1 = []
+        #list_ddsfcutfccb_ch1 = []
     else:
         print('square satisfy')
 
