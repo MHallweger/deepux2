@@ -1,6 +1,5 @@
 import os
 import sys
-import argparse
 
 # import torch
 # import torch.nn as nn
@@ -20,6 +19,9 @@ from PySide2 import QtWidgets
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
+
+# Console
+import fire
 
 import tkinter as tk
 from xml.dom import minidom
@@ -182,19 +184,19 @@ class Ui_mainWindow(object):
         self.pushButton_8.setIconSize(QSize(25, 25))
         self.pushButton_8.raise_()
 
-        self.pushButton_1.clicked.connect(save_subtree)  # Cut UI's
-        self.pushButton_2.clicked.connect(load_data_for_model)  # Load UI Data
-        self.pushButton_3.clicked.connect(generateModel)  # Generate Model
-        self.pushButton_4.clicked.connect(generate_categories)  # Generate Categories
-        self.pushButton_5.clicked.connect(generate_generators)  # Generate Generators
-        self.pushButton_6.clicked.connect(generate_uis)  # Generate UI Suggestions
-        self.pushButton_7.clicked.connect(use_own_data_set)  # Use own Data Set
-        self.pushButton_8.clicked.connect(start_recalculation)  # Start recalculation
+        self.pushButton_1.clicked.connect(self.save_subtree)  # Cut UI's
+        self.pushButton_2.clicked.connect(self.load_data_for_model)  # Load UI Data
+        self.pushButton_3.clicked.connect(self.generateModel)  # Generate Model
+        self.pushButton_4.clicked.connect(self.generate_categories)  # Generate Categories
+        self.pushButton_5.clicked.connect(self.generate_generators)  # Generate Generators
+        self.pushButton_6.clicked.connect(self.generate_uis)  # Generate UI Suggestions
+        self.pushButton_7.clicked.connect(self.use_own_data_set)  # Use own Data Set
+        self.pushButton_8.clicked.connect(self.start_recalculation)  # Start recalculation
 
         # Actions
         self.action_ueber = QAction(mainWindow)
         self.action_ueber.setObjectName(u"action_ueber")
-        self.action_ueber.triggered.connect(about)
+        self.action_ueber.triggered.connect(self.about)
         self.action_ueber.setIcon(icon)
 
         # Lines
@@ -284,77 +286,77 @@ class Ui_mainWindow(object):
         self.pushButton_7.setStatusTip("Open a folder where you can insert your own screenshots. These will be used for future calculations")
         self.pushButton_8.setStatusTip("Start a recalculation with the new screenshots")
 
-# Create a "about" Message-Box
-def about(self):
-    widget = QWidget()
-    widget.setWindowIcon(QIcon(u"bulb.png"))
-    QMessageBox.about(
-        widget,
-        "About this Tool",
-        "<p>This tool was developed by a so-called Guided Project in the context of the computer science master of the TH Cologne Campus Gummersbach.</p>"
-        "<p><h3><u>The tool was developed by:</h3></u></p>"
-        "<p><b>Muhammet Burhan Topcu</b> <br>muhammet_burhan.topcu@smail.th-koeln.de</p>"
-        "<p><b>Marvin Nicholas Hallweger</b> <br>marvin_nicholas.hallweger@smail.th-koeln.de</p>"
-        "<p><h3><u>And supported by:</h3></u></p>"
-        "<p><b>Prof. Dr. Matthias Böhmer</b> <br>matthias.boehmer@th-koeln.de</p>",
-    )
+    # Create a "about" Message-Box
+    def about(self):
+        widget = QWidget()
+        widget.setWindowIcon(QIcon(u"bulb.png"))
+        QMessageBox.about(
+            widget,
+            "About this Tool",
+            "<p>This tool was developed by a so-called Guided Project in the context of the computer science master of the TH Cologne Campus Gummersbach.</p>"
+            "<p><h3><u>The tool was developed by:</h3></u></p>"
+            "<p><b>Muhammet Burhan Topcu</b> <br>muhammet_burhan.topcu@smail.th-koeln.de</p>"
+            "<p><b>Marvin Nicholas Hallweger</b> <br>marvin_nicholas.hallweger@smail.th-koeln.de</p>"
+            "<p><h3><u>And supported by:</h3></u></p>"
+            "<p><b>Prof. Dr. Matthias Böhmer</b> <br>matthias.boehmer@th-koeln.de</p>",
+        )
 
-# Method for changing label images
-# for example: image1 = u"image.png"
-def insert_label_images(self, image1, image2, image3, image4):
-    if image1 is not None:
-        self.label_1.setPixmap(QPixmap(image1))
-    if image2 is not None:
-        self.label_2.setPixmap(QPixmap(image2))
-    if image3 is not None:
-        self.label_3.setPixmap(QPixmap(image3))
-    if image4 is not None:
-        self.label_4.setPixmap(QPixmap(image4))
+    # Method for changing label images
+    # for example: image1 = u"image.png"
+    def insert_label_images(self, image1, image2, image3, image4):
+        if image1 is not None:
+            self.label_1.setPixmap(QPixmap(image1))
+        if image2 is not None:
+            self.label_2.setPixmap(QPixmap(image2))
+        if image3 is not None:
+            self.label_3.setPixmap(QPixmap(image3))
+        if image4 is not None:
+            self.label_4.setPixmap(QPixmap(image4))
 
-def save_subtree(self):
-    print("Cut UI's Button clicked!")
-    # save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements,
-    # cutted_resized_ui_elements)
+    def save_subtree(self):
+        print("Cut UI's Button clicked!")
+        # save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements,
+        # cutted_resized_ui_elements)
 
-def load_data_for_model(self):
-    print("Load UI Data Button clicked!")
-    # load_data(cutted_resized_ui_elements,data_dir)
-    # load_subtrees(cutted_resized_ui_elements,data_dir)
+    def load_data_for_model(self):
+        print("Load UI Data Button clicked!")
+        # load_data(cutted_resized_ui_elements,data_dir)
+        # load_subtrees(cutted_resized_ui_elements,data_dir)
 
-def generateModel(self):
-    print("Generate Model Button clicked!")
-    # train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir)
+    def generateModel(self):
+        print("Generate Model Button clicked!")
+        # train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir)
 
-def generate_generators(self):
-    print("Generate Generators Button clicked!")
-    # build_generator(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
+    def generate_generators(self):
+        print("Generate Generators Button clicked!")
+        # build_generator(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
 
-def generate_uis(self):
-    print("Generate UI Suggestions Button clicked!")
-    # build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
+    def generate_uis(self):
+        print("Generate UI Suggestions Button clicked!")
+        # build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
 
-def generate_categories(self):
-    print("Generate Categories Button clicked!")
-    # get_style_emb(models_torch_dir,app_details_csv,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
+    def generate_categories(self):
+        print("Generate Categories Button clicked!")
+        # get_style_emb(models_torch_dir,app_details_csv,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
 
-def use_own_data_set(self):
-    print("Use own Data Set Button clicked!")
-    path = "C:\\Users\\Marvin\\Desktop\\HierAblegen"
-    path = os.path.realpath(path)
-    os.startfile(path)
+    def use_own_data_set(self):
+        print("Use own Data Set Button clicked!")
+        path = "C:\\Users\\Marvin\\Desktop\\HierAblegen"
+        path = os.path.realpath(path)
+        os.startfile(path)
 
-def choose_xml_file(self):
-    print("Choose .xml file Button clicked!")
+    def choose_xml_file(self):
+        print("Choose .xml file Button clicked!")
 
-    choosenXMLFile = fd.askopenfilename(
-        title="Select .xml file to focus from the project folder...",
-        filetypes=[('.xml files', '.xml')])
-    xmldoc = minidom.parse(choosenXMLFile)
-    print("########## XML-FILE ##########")
-    print(xmldoc.toxml())
+        choosenXMLFile = fd.askopenfilename(
+            title="Select .xml file to focus from the project folder...",
+            filetypes=[('.xml files', '.xml')])
+        xmldoc = minidom.parse(choosenXMLFile)
+        print("########## XML-FILE ##########")
+        print(xmldoc.toxml())
 
-def start_recalculation(self):
-    print("Start recalculation Button clicked!")
+    def start_recalculation(self):
+        print("Start recalculation Button clicked!")
 
 if __name__ == '__main__':
     # if not os.path.exists(json_rico):
@@ -384,7 +386,9 @@ if __name__ == '__main__':
     # if not os.path.exists(results_pre_dir):
     #     os.makedirs(results_pre_dir)
 
-    # TODO: Implement console functionality
+    # Console-call
+    # https://stackoverflow.com/a/44360294
+    fire.Fire(Ui_mainWindow)
 
     # Build UI
     app = QtWidgets.QApplication(sys.argv)
