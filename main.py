@@ -1,6 +1,12 @@
 import os
 import sys
 
+from PySide2 import QtWidgets
+from PySide2.QtCore import QRect, QSize, QCoreApplication, QMetaObject
+from PySide2.QtGui import QIcon, QFont, Qt, QPixmap
+from PySide2.QtWidgets import QLabel, QPushButton, QWidget, QFrame, QStatusBar, QSizePolicy, QAction, QProgressBar, \
+    QMenuBar, QMenu, QMessageBox
+
 from GUIGAN_main import build_result_uis
 from build_generator import build_generator
 from get_style_emb import get_style_emb
@@ -8,12 +14,6 @@ from application.modelGenerator.load_data import load_data
 from application.modelGenerator.load_subtrees import load_subtrees
 from application.modelGenerator.train_siamese_net import train_siamese
 from application.subtreeGenerator.save_subtree_info import save_subtree_info
-
-# UI
-from PySide2 import QtWidgets
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
 
 # Console
 import fire
@@ -249,7 +249,7 @@ class Ui_mainWindow(object):
         self.label_2.setText("")
         self.label_3.setText("")
         self.label_4.setText("")
-        self.label_5.setText(QCoreApplication.translate("mainWindow", u"AT THIS POINT THERE ARE SEVERAL TIPS SHOWN TO YOU DURING THE DEVELOPMENT!", None))
+        self.label_5.setText(QCoreApplication.translate("mainWindow", u"", None))
         self.label_6.setText(QCoreApplication.translate("mainWindow", u"Action", None))
         self.label_7.setText(QCoreApplication.translate("mainWindow", u"Individualization", None))
 
@@ -379,6 +379,10 @@ if __name__ == '__main__':
 
     if not os.path.exists(results_pre_dir):
         os.makedirs(results_pre_dir)
+
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
+
 
     # Console-call
     # https://stackoverflow.com/a/44360294

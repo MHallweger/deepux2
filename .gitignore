@@ -2,4 +2,6 @@ folders
 venv/
 .idea/
 .idea/*
+.DS_Store
+.idea
 subtreeGenerator/__pycache__
