@@ -15,6 +15,7 @@ from sklearn.preprocessing import scale
 from sklearn.neighbors import kneighbors_graph
 from scipy.stats import mode
 
+from GUIGAN_test import BATCH_SIZE, g_sequence_len
 from generator import Generator
 from discriminator import Discriminator
 from modelGenerator.load_data import get_s_app

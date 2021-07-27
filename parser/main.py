@@ -12,7 +12,7 @@ class Root:
 
 class ViewObj:
 
-    def __init__(self, id,resourceId, index, space,android_class,layout_height,layout_width,location_on_screen_x,location_on_screen_y,visibility,bounds):
+    def __init__(self, id,resourceId, index, space,android_class,layout_height,layout_width,location_on_screen_x,location_on_screen_y,visibility,bounds,mLeft,mTop,mRight,mBottom):
         self.id = id
         self.resourceId = resourceId
         self.index = index
@@ -23,6 +23,10 @@ class ViewObj:
         self.layout_width = layout_width
         self.location_on_screen_x = location_on_screen_x
         self.location_on_screen_y = location_on_screen_y
+        self.mLeft = mLeft
+        self.mTop = mTop
+        self.mRight = mRight
+        self.mBottom = mBottom
         self.bounds = bounds
         self.children = []
 
@@ -99,8 +103,9 @@ def load_file(name):
                 mTop = attributes.split("=")[1].split(",")[1]
 
 
-        bounds = [int(mLeft),int(mTop),int(mRight),int(mBottom)]
+        ##bounds = [int(mLeft),int(mTop),int(mRight),int(mBottom)]
 
+        bounds = [int(mLeft),int(mBottom),int(mRight)+int(layout_width),int(mBottom)+int(layout_height)]
 
 
         print(android_class)
@@ -119,7 +124,11 @@ def load_file(name):
                                              getLocationOnScreen_x,
                                              getLocationOnScreen_y,
                                              getVisibility,
-                                             bounds))
+                                             bounds,
+                                             mLeft,
+                                             mTop,
+                                             mRight,
+                                             mBottom))
                 spaces = 0
                 break
 
@@ -176,4 +185,4 @@ def clearString(string):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    load_file('test9.li')
+    load_file('test14.li')

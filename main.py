@@ -2,18 +2,18 @@ import os
 import sys
 import argparse
 
-# import torch
-# import torch.nn as nn
-# import torch.optim as optim
-# from torch.autograd import Variable
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.autograd import Variable
 
-# from GUIGAN_test import build_result_uis
-# from build_generator import build_generator
-# from get_style_emb import get_style_emb
-# from modelGenerator.load_data import load_data
-# from modelGenerator.load_subtrees import load_subtrees
-# from modelGenerator.train_siamese_net import train_siamese
-# from subtreeGenerator.save_subtree_info import save_subtree_info
+from GUIGAN_test import build_result_uis
+from build_generator import build_generator
+from get_style_emb import get_style_emb
+from modelGenerator.load_data import load_data
+from modelGenerator.load_subtrees import load_subtrees
+from modelGenerator.train_siamese_net import train_siamese
+from subtreeGenerator.save_subtree_info import save_subtree_info
 
 # UI
 from PySide2 import QtWidgets
@@ -313,29 +313,29 @@ def insert_label_images(self, image1, image2, image3, image4):
 
 def save_subtree(self):
     print("Cut UI's Button clicked!")
-    # save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements,
-    # cutted_resized_ui_elements)
+    save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements,
+    cutted_resized_ui_elements)
 
 def load_data_for_model(self):
     print("Load UI Data Button clicked!")
-    # load_data(cutted_resized_ui_elements,data_dir)
-    # load_subtrees(cutted_resized_ui_elements,data_dir)
+    load_data(cutted_resized_ui_elements,data_dir)
+    load_subtrees(cutted_resized_ui_elements,data_dir)
 
 def generateModel(self):
     print("Generate Model Button clicked!")
-    # train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir)
+    train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir)
 
 def generate_generators(self):
     print("Generate Generators Button clicked!")
-    # build_generator(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
+    build_generator(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
 
 def generate_uis(self):
     print("Generate UI Suggestions Button clicked!")
-    # build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
+    build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
 
 def generate_categories(self):
     print("Generate Categories Button clicked!")
-    # get_style_emb(models_torch_dir,app_details_csv,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
+    get_style_emb(models_torch_dir,app_details_csv,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
 
 def use_own_data_set(self):
     print("Use own Data Set Button clicked!")
@@ -357,32 +357,32 @@ def start_recalculation(self):
     print("Start recalculation Button clicked!")
 
 if __name__ == '__main__':
-    # if not os.path.exists(json_rico):
-    #     os.makedirs(json_rico)
-    #
-    # if not os.path.exists(gui_dir_rico):
-    #     os.makedirs(gui_dir_rico)
-    #
-    # if not os.path.exists(gui_information_dir):
-    #     os.makedirs(gui_information_dir)
-    #
-    # if not os.path.exists(control_elements_id_dir):
-    #     os.makedirs(control_elements_id_dir)
-    #
-    # if not os.path.exists(cutted_ui_elements):
-    #     os.makedirs(cutted_ui_elements)
-    #
-    # if not os.path.exists(cutted_resized_ui_elements):
-    #     os.makedirs(cutted_resized_ui_elements)
-    #
-    # if not os.path.exists(categories_app_emb):
-    #     os.makedirs(categories_app_emb)
-    #
-    # if not os.path.exists(results_dir):
-    #     os.makedirs(results_dir)
-    #
-    # if not os.path.exists(results_pre_dir):
-    #     os.makedirs(results_pre_dir)
+    if not os.path.exists(json_rico):
+     os.makedirs(json_rico)
+
+    if not os.path.exists(gui_dir_rico):
+        os.makedirs(gui_dir_rico)
+
+    if not os.path.exists(gui_information_dir):
+        os.makedirs(gui_information_dir)
+
+    if not os.path.exists(control_elements_id_dir):
+        os.makedirs(control_elements_id_dir)
+
+    if not os.path.exists(cutted_ui_elements):
+        os.makedirs(cutted_ui_elements)
+
+    if not os.path.exists(cutted_resized_ui_elements):
+        os.makedirs(cutted_resized_ui_elements)
+
+    if not os.path.exists(categories_app_emb):
+        os.makedirs(categories_app_emb)
+
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
+
+    if not os.path.exists(results_pre_dir):
+        os.makedirs(results_pre_dir)
 
     # TODO: Implement console functionality
 

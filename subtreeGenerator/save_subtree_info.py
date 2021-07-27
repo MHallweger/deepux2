@@ -139,6 +139,12 @@ def save_subtree_img(_list, ui_dir, dst_dir,ui_id):
             if get_height(c[2]) >= 1280:
                 _list.remove(c)
 
+
+            #c[2][0] = 0
+            ##c[2][1] = 400 ### height
+            ##c[2][2] = 1440 ##fixed by json file
+            ##c[2][3] = 700
+
         im = Image.open(ui_dir)
         for c in _list:
             resized_block = get_resized_bounds(c[2])
