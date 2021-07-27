@@ -42,7 +42,7 @@ class Ui_mainWindow(object):
             mainWindow.setObjectName(u"mainWindow")
         mainWindow.setFixedSize(1143, 922)
         mainWindow.setMouseTracking(False)
-        mainWindow.setWindowIcon(QIcon(u"bulb.png"))
+        mainWindow.setWindowIcon(QIcon(u"resources/images/bulb.png"))
 
         # Widgets
         self.centralwidget = QWidget(mainWindow)
@@ -82,7 +82,7 @@ class Ui_mainWindow(object):
         self.label_1.setObjectName(u"label_1")
         self.label_1.setGeometry(QRect(10, 10, 271, 451))
         self.label_1.setStyleSheet(u"")
-        self.label_1.setPixmap(QPixmap(u"Screenshot_1624995967.png"))
+        self.label_1.setPixmap(QPixmap(u"resources/images/Screenshot_1624995967.png"))
         self.label_1.setScaledContents(True)
         self.label_1.raise_()
         self.label_2 = QLabel(self.centralwidget)
@@ -90,20 +90,20 @@ class Ui_mainWindow(object):
         self.label_2.setGeometry(QRect(290, 10, 271, 451))
         self.label_2.setStyleSheet(u"")
         self.label_2.raise_()
-        self.label_2.setPixmap(QPixmap(u"Screenshot_1624995967.png"))
+        self.label_2.setPixmap(QPixmap(u"resources/images/Screenshot_1624995967.png"))
         self.label_2.setScaledContents(True)
         self.label_3 = QLabel(self.centralwidget)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setGeometry(QRect(570, 10, 271, 451))
         self.label_3.setStyleSheet(u"")
-        self.label_3.setPixmap(QPixmap(u"Screenshot_1624995967.png"))
+        self.label_3.setPixmap(QPixmap(u"resources/images/Screenshot_1624995967.png"))
         self.label_3.setScaledContents(True)
         self.label_3.raise_()
         self.label_4 = QLabel(self.centralwidget)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setGeometry(QRect(850, 10, 271, 451))
         self.label_4.setStyleSheet(u"")
-        self.label_4.setPixmap(QPixmap(u"Screenshot_1624995967.png"))
+        self.label_4.setPixmap(QPixmap(u"resources/images/Screenshot_1624995967.png"))
         self.label_4.setScaledContents(True)
         self.label_4.raise_()
         self.label_5 = QLabel(self.centralwidget)
@@ -133,11 +133,11 @@ class Ui_mainWindow(object):
 
         # Icons
         icon = QIcon()
-        icon.addFile(u"information-button.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"resources/images/information-button.png", QSize(), QIcon.Normal, QIcon.Off)
         icon2 = QIcon()
-        icon2.addFile(u"folder.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u"resources/images/folder.png", QSize(), QIcon.Normal, QIcon.Off)
         icon3 = QIcon()
-        icon3.addFile(u"gear.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u"resources/images/gear.png", QSize(), QIcon.Normal, QIcon.Off)
 
         # Buttons
         self.pushButton_1 = QPushButton(self.centralwidget)
@@ -283,7 +283,7 @@ class Ui_mainWindow(object):
 # Create a "about" Message-Box
 def about(self):
     widget = QWidget()
-    widget.setWindowIcon(QIcon(u"bulb.png"))
+    widget.setWindowIcon(QIcon(u"resources/images/bulb.png"))
     QMessageBox.about(
         widget,
         "About this Tool",
