@@ -1,4 +1,6 @@
 import json
+import ntpath
+
 
 class Acvitiy:
     def __init__(self, activityName, root):
@@ -33,6 +35,7 @@ class ViewObj:
 
 
 def load_file(name):
+
     listOfViewObj = []
     lines = []
     file = open(name, "r", encoding="ISO-8859-1", errors='ignore')
@@ -139,7 +142,12 @@ def load_file(name):
 
 
     listOfViewObj = matchChildren(listOfViewObj)
-    toJson(title,listOfViewObj)
+    jsonStr = toJson(title,listOfViewObj)
+
+    nameOfFile = ntpath.basename(name)
+    f = open(nameOfFile.split(".")[0] + ".json", "a")
+    f.write(jsonStr)
+    f.close()
 
 def toJson(title,listOfViewObj):
     activiy = Acvitiy(title, Root(listOfViewObj[0].__dict__).__dict__).__dict__
@@ -149,6 +157,8 @@ def toJson(title,listOfViewObj):
     jsonStr = jsonStr.replace("resourceId","resource-id")
     jsonStr = jsonStr.replace("NO_ID", "")
     print(jsonStr)
+    return jsonStr
+
 
 def matchChildren(objects):
     for i in range(len(objects)):
