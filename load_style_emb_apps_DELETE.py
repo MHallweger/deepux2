@@ -8,9 +8,9 @@ import numpy as np
 from PIL import Image
 import tensorflow.keras.backend as K
 
-sys.path.append(r'.\modelGenerator')
-from modelGenerator.load_data import get_s_app
-from modelGenerator.model import siamese_net
+sys.path.append(r'application/modelGenerator')
+from application.modelGenerator.load_data import get_s_app
+from application.modelGenerator.model import siamese_net
 
 def get_images(train_uis, input_shape):
     num = len(train_uis)

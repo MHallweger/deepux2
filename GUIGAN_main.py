@@ -2,19 +2,19 @@
 
 
 from datetime import time
-from comm import get_samples, get_list_wbk
+from comm import get_samples
 
-import os,time,random,argparse
+import os,time,random
 import numpy as np
 import torch
 from torch.autograd import Variable
 from sklearn.decomposition import PCA
 
-from generator import Generator
+from application.models.generator import Generator
 from get_style_emb import read_data,get_ui_info
 from comm import get_bank_size,get_Repository,get_list_wbk
 import sys
-from modelGenerator.load_data import get_s_app
+from application.modelGenerator.load_data import get_s_app
 
 sys.path.append(r'.\StyleEmbedding')
 
@@ -294,7 +294,7 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
 
             # -------------------------------------
             '''connect subtrees'''
-            from PIL import Image, ImageFont, ImageDraw
+            from PIL import Image
             path1 = os.path.join(NEGATIVE_FILE0, 'geneimgdir.txt')
 
             _resize = False

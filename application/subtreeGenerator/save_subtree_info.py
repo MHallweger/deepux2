@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 from PIL import ImageFile
 
-from subtreeGenerator.get_subtree import get_layerNum, get_resized_bounds, get_height, get_className, \
+from application.subtreeGenerator.get_subtree import get_layerNum, get_resized_bounds, get_height, get_className, \
     get_component_byjson, get_width, compress_image
 
 

@@ -1,18 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os,time,random,argparse
-import numpy as np
-import torch
-from torch.autograd import Variable
-from sklearn.decomposition import PCA
-from GUIGAN_main import generate_samples
-from generator import Generator
-from get_style_emb import read_data,get_ui_info
-from comm import get_bank_size,get_Repository,get_list_wbk
 import sys
-from modelGenerator.load_data import get_s_app
 
-sys.path.append(r'.\modelGenerator')
+sys.path.append(r'application/modelGenerator')
 
 # Basic Training Paramters
 SEED = 88

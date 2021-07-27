@@ -3,12 +3,12 @@
 save embs in file
 """
 import torch
-import os,sys,time
+import os,time
 import numpy as np
 from PIL import Image
 
-from modelGenerator.load_data import get_s_app
-from modelGenerator.network import Siamese
+from application.modelGenerator.load_data import get_s_app
+from application.modelGenerator.network import Siamese
 
 def get_images(train_uis, input_shape):
     num = len(train_uis)

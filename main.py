@@ -4,10 +4,10 @@ import sys
 from GUIGAN_main import build_result_uis
 from build_generator import build_generator
 from get_style_emb import get_style_emb
-from modelGenerator.load_data import load_data
-from modelGenerator.load_subtrees import load_subtrees
-from modelGenerator.train_siamese_net import train_siamese
-from subtreeGenerator.save_subtree_info import save_subtree_info
+from application.modelGenerator.load_data import load_data
+from application.modelGenerator.load_subtrees import load_subtrees
+from application.modelGenerator.train_siamese_net import train_siamese
+from application.subtreeGenerator.save_subtree_info import save_subtree_info
 
 # UI
 from PySide2 import QtWidgets
@@ -18,7 +18,6 @@ from PySide2.QtWidgets import *
 # Console
 import fire
 
-import tkinter as tk
 from xml.dom import minidom
 from tkinter import filedialog as fd
 
@@ -324,7 +323,7 @@ def generateModel(self):
 
 def generate_generators(self):
     print("Generate Generators Button clicked!")
-    build_generator(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
+    build_generator(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
 
 def generate_uis(self):
     print("Generate UI Suggestions Button clicked!")

@@ -6,9 +6,9 @@ import random
 import numpy as np
 from PIL import Image
 
-from modelGenerator.load_data import load_dataset, read_valid_file
-from modelGenerator.load_subtrees import read_pair
-from modelGenerator.network import Siamese, ContrastiveLoss
+from application.modelGenerator.load_data import load_dataset, read_valid_file
+from application.modelGenerator.load_subtrees import read_pair
+from application.modelGenerator.network import Siamese, ContrastiveLoss
 
 
 def weights_init(mod):

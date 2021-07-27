@@ -6,7 +6,7 @@ randomly select subtree pairs to train the SiameseNet
 import random
 import numpy as np
 
-from modelGenerator.load_data import write_file, load_dataset, read_valid_file
+from application.modelGenerator.load_data import write_file, load_dataset, read_valid_file
 
 def write_pair(_pair_file, train_intra_pair, train_inter_pair):
     for train_pair in train_intra_pair:

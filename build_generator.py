@@ -1,4 +1,4 @@
-import os, time, random, math, csv, argparse
+import os, time, random, math, argparse
 import numpy as np
 from apted import APTED, Config
 from apted.helpers import Tree
@@ -6,18 +6,18 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
-from sklearn import (manifold, datasets, decomposition, ensemble, random_projection, metrics)
+from sklearn import (metrics)
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from scipy.stats import mode
 
-from generator import Generator
-from discriminator import Discriminator
-from modelGenerator.load_data import get_s_app
-from reward import Rollout
-from data_iter import DisDataIter
+from application.models.generator import Generator
+from application.models.discriminator import Discriminator
+from application.modelGenerator.load_data import get_s_app
+from application.models.reward import Rollout
+from application.models.data_iter import DisDataIter
 from get_style_emb import read_data, get_ui_info
-from comm import get_samples, get_bank_size, remove_0, get_Repository, get_list_wbk
+from comm import get_samples, get_bank_size, get_Repository, get_list_wbk
 
 import sys
 
@@ -112,8 +112,7 @@ discriminator_num_class = 2
 bank_dict = {'1': 2, '2': 6, '3': 10, '4': 20, '5': 35, '6': 50, '7': 70, '8': 100, '9': 200, '10': 300}
 
 
-def build_generator(app_details_csv, models_dir, gui_information_dir, control_elements_id_dir, categories_app_emb,
-                    results_dir, results_pre_dir, cutted_ui_elements, cutted_resized_ui_elements):
+def build_generator(app_details_csv, models_dir, gui_information_dir, control_elements_id_dir, categories_app_emb, cutted_ui_elements, cutted_resized_ui_elements):
     random.seed(SEED)
 
     NEGATIVE_FILE = '.\samples'
