@@ -8,7 +8,6 @@ import numpy as np
 
 from modelGenerator.load_data import write_file, load_dataset, read_valid_file
 
-
 def write_pair(_pair_file, train_intra_pair, train_inter_pair):
     for train_pair in train_intra_pair:
         info = train_pair[0]+','+train_pair[1]+ '\n'
@@ -109,7 +108,7 @@ def load_subtrees(cutted_resized_ui_elements,data_dir):
     _valid_pair_file = data_dir + '\\valid_st_pair.txt'
     _test_pair_file = data_dir + '\\test_st_pair.txt'
 
-    #    # write the pair data to file
+    # write the pair data to file
     write_pair(_train_pair_file, train_intra_pair, train_inter_pair)
     write_pair(_valid_pair_file, valid_intra_pair, valid_inter_pair)
     write_pair(_test_pair_file, test_intra_pair, test_inter_pair)

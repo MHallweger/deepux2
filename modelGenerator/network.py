@@ -50,18 +50,14 @@ class Siamese(nn.Module):
             nn.Conv2d(128, 256, 4),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(2),
-#            nn.BatchNorm2d(256,affine=True),
         )
-#        self.liner = nn.Sequential(nn.Linear(86016, 256), nn.Sigmoid())
+
         self.liner = nn.Sequential(
                 nn.Linear(86016, 256), 
                 nn.ReLU(inplace=True),
                 nn.Linear(256, 64),
-#                nn.Linear(64, 2),
-#                nn.Sigmoid()
                 )
         self.out = nn.Linear(64, 2)
-#        self.out = nn.Sequential(nn.Linear(256, 1), nn.Sigmoid())
 
     def forward_cl(self, x): 
         x = self.conv(x)
@@ -70,10 +66,10 @@ class Siamese(nn.Module):
         return x
     
     def forward_one(self, x):
-        x = self.conv(x)               # [32, 256, 12, 28]
-        x = x.reshape(x.size()[0], -1) # [32, 86016]
-        x = self.liner(x)              # [32, 64]
-        x = self.out(x)                # [32, 2]
+        x = self.conv(x)
+        x = x.reshape(x.size()[0], -1)
+        x = self.liner(x)
+        x = self.out(x)
         return x
 
     def forward(self, x1, x2):

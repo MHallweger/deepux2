@@ -68,20 +68,23 @@ def Iterator(intra_pair, inter_pair, batch_size, shape, _i):
         inter_batch = dirs_to_images_and_labels(inter_batch_pairs, h, w, c)
         x1 = np.concatenate((intra_batch[0], inter_batch[0]), axis = 0)
         x2 = np.concatenate((intra_batch[1], inter_batch[1]), axis = 0)
+
         # norm
         x1 = x1/255
-        x2 = x2/255   
+        x2 = x2/255
+
         # set y(lables)
         y = np.empty((2*batch_size,),dtype="int")
         y[:batch_size] = 1
         y[batch_size:] = 0
+
         # shuffle
         index = [j for j in range(len(y))]
         random.shuffle(index)
         x1 = x1[index]
         x2 = x2[index]
         y = y[index]
-        _i+=1
+        _i += 1
         yield ([x1,x2],y)
         
 def dirs_to_images_and_labels(batch_dirs, height=128, width=128, channel=3, resize =0): 
@@ -105,11 +108,11 @@ def dirs_to_images_and_labels(batch_dirs, height=128, width=128, channel=3, resi
     return image_pairs
 
 def train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir):
-    #dataset_path = r'.\p_app_Td_sts_resized'  # subtree imgs
     input_shape = (256, 512, 3)
     learning_rate = 0.00005
     batch_size = 8
-    epoch = 1  # 30
+    epoch = 30  # 30
+
     # ----------------------read data-----------------------------------------------------
     ui_dictionary = load_dataset(cutted_resized_ui_elements)
     _file = data_dir + '\\data.txt'
@@ -118,7 +121,8 @@ def train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir):
     train_intra_pair, train_inter_pair = read_pair(_train_pair_file)
     train_size = min(len(train_intra_pair), len(train_inter_pair))
     steps_per_epoch_train = train_size // batch_size
-    # ----------------------build network-----------------------------------------------------
+
+    #----------------------build network-----------------------------------------------------
     net = Siamese()
     net.apply(weights_init)
     net.cuda()
@@ -128,7 +132,8 @@ def train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir):
     criterion = ContrastiveLoss()
     train_loss = []
     early_stopping = EarlyStopping(patience=5, verbose=True)
-    #    #----------------------train-----------------------------------------------------
+
+    #----------------------train-----------------------------------------------------
     global _i
     for e in range(epoch):
         print('epoch: ', e)

@@ -1,12 +1,7 @@
 import os
 import sys
 
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.autograd import Variable
-
-from GUIGAN_test import build_result_uis
+from GUIGAN_main import build_result_uis
 from build_generator import build_generator
 from get_style_emb import get_style_emb
 from modelGenerator.load_data import load_data
@@ -184,19 +179,19 @@ class Ui_mainWindow(object):
         self.pushButton_8.setIconSize(QSize(25, 25))
         self.pushButton_8.raise_()
 
-        self.pushButton_1.clicked.connect(self.save_subtree)  # Cut UI's
-        self.pushButton_2.clicked.connect(self.load_data_for_model)  # Load UI Data
-        self.pushButton_3.clicked.connect(self.generateModel)  # Generate Model
-        self.pushButton_4.clicked.connect(self.generate_categories)  # Generate Categories
-        self.pushButton_5.clicked.connect(self.generate_generators)  # Generate Generators
-        self.pushButton_6.clicked.connect(self.generate_uis)  # Generate UI Suggestions
-        self.pushButton_7.clicked.connect(self.use_own_data_set)  # Use own Data Set
-        self.pushButton_8.clicked.connect(self.start_recalculation)  # Start recalculation
+        self.pushButton_1.clicked.connect(save_subtree)  # Cut UI's
+        self.pushButton_2.clicked.connect(load_data_for_model)  # Load UI Data
+        self.pushButton_3.clicked.connect(generateModel)  # Generate Model
+        self.pushButton_4.clicked.connect(generate_categories)  # Generate Categories
+        self.pushButton_5.clicked.connect(generate_generators)  # Generate Generators
+        self.pushButton_6.clicked.connect(generate_uis)  # Generate UI Suggestions
+        self.pushButton_7.clicked.connect(use_own_data_set)  # Use own Data Set
+        self.pushButton_8.clicked.connect(start_recalculation)  # Start recalculation
 
         # Actions
         self.action_ueber = QAction(mainWindow)
         self.action_ueber.setObjectName(u"action_ueber")
-        self.action_ueber.triggered.connect(self.about)
+        self.action_ueber.triggered.connect(about)
         self.action_ueber.setIcon(icon)
 
         # Lines
@@ -278,11 +273,11 @@ class Ui_mainWindow(object):
         self.pushButton_8.setText(QCoreApplication.translate("mainWindow", u"Start recalculation", None))
 
         self.pushButton_1.setStatusTip("Cut the existing screenshots into a specified substructure")
-        self.pushButton_2.setStatusTip("???")
-        self.pushButton_3.setStatusTip("???")
+        self.pushButton_2.setStatusTip("Prepare the cutted user interface elements for the neural network")
+        self.pushButton_3.setStatusTip("Train models with the help of the siamese network")
         self.pushButton_4.setStatusTip("???")
-        self.pushButton_5.setStatusTip("???")
-        self.pushButton_6.setStatusTip("???")
+        self.pushButton_5.setStatusTip("Generate GAN-geneator ")
+        self.pushButton_6.setStatusTip("Create new inspiring user interfaces with the help of the generator ")
         self.pushButton_7.setStatusTip("Open a folder where you can insert your own screenshots. These will be used for future calculations")
         self.pushButton_8.setStatusTip("Start a recalculation with the new screenshots")
 
@@ -360,7 +355,7 @@ def start_recalculation(self):
 
 if __name__ == '__main__':
     if not os.path.exists(json_rico):
-     os.makedirs(json_rico)
+        os.makedirs(json_rico)
 
     if not os.path.exists(gui_dir_rico):
         os.makedirs(gui_dir_rico)

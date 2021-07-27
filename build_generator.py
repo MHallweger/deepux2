@@ -1,16 +1,14 @@
-import os,time,random,math,csv,argparse
+import os, time, random, math, csv, argparse
 import numpy as np
 from apted import APTED, Config
-from  apted.helpers import Tree
+from apted.helpers import Tree
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
-from sklearn import (manifold, datasets, decomposition, ensemble,random_projection, metrics)
+from sklearn import (manifold, datasets, decomposition, ensemble, random_projection, metrics)
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
-from sklearn.preprocessing import scale
-from sklearn.neighbors import kneighbors_graph
 from scipy.stats import mode
 
 from generator import Generator
@@ -18,11 +16,13 @@ from discriminator import Discriminator
 from modelGenerator.load_data import get_s_app
 from reward import Rollout
 from data_iter import DisDataIter
-from get_style_emb import read_data,get_ui_info
-from comm import get_samples,get_bank_size,remove_0,get_Repository,get_list_wbk
+from get_style_emb import read_data, get_ui_info
+from comm import get_samples, get_bank_size, remove_0, get_Repository, get_list_wbk
 
 import sys
+
 sys.path.append(r'.\StyleEmbedding')
+
 
 class GANLoss3(nn.Module):
     """Reward-Refined NLLLoss Function for adversial training of Gnerator
@@ -83,7 +83,6 @@ class GANLoss(nn.Module):
         loss = loss * reward
         return -torch.sum(loss)
 
-
 # ================== Parameter Definition =================
 parser = argparse.ArgumentParser(description='Training Parameter')
 parser.add_argument('--cuda', action='store', default=0, type=int)
@@ -93,26 +92,24 @@ print(opt)
 # Basic Training Paramters
 SEED = 88
 BATCH_SIZE = 32
-#TOTAL_BATCH = 200
-TOTAL_BATCH = 10
+TOTAL_BATCH = 200
 
 POSITIVE_FILE = 'real'
 EVAL_FILE = 'eval'
 
 # Genrator Parameters
-g_emb_dim = 32
-g_hidden_dim = 32
-g_sequence_len = 30
+generator_emb_dim = 32
+generator_hidden_dim = 32
+generator_sequence_len = 30
 
 # Discriminator Parameters
-d_emb_dim = 64
-d_filter_sizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20]
-d_num_filters = [100, 200, 200, 200, 200, 100, 100, 100, 100, 100, 160, 160]
-d_dropout = 0.5
-d_num_class = 2
+discriminator_emb_dim = 64
+discriminator_filter_sizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20]
+discriminator_num_filters = [100, 200, 200, 200, 200, 100, 100, 100, 100, 100, 160, 160]
+discriminator_dropout = 0.5
+discriminator_num_class = 2
 
-bank_dict = {'1':2, '2':6, '3':10, '4':20, '5':35, '6':50, '7':70, '8':100, '9':200, '10':300}
-
+bank_dict = {'1': 2, '2': 6, '3': 10, '4': 20, '5': 35, '6': 50, '7': 70, '8': 100, '9': 200, '10': 300}
 
 
 def build_generator(app_details_csv, models_dir, gui_information_dir, control_elements_id_dir, categories_app_emb,
@@ -124,11 +121,11 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
     if not os.path.exists(NEGATIVE_FILE):
         os.mkdir(NEGATIVE_FILE)
 
-    appsl, appsd = get_s_app(app_details_csv, cutted_ui_elements)
-    appsl1 = []
+    app_list, appsd = get_s_app(app_details_csv, cutted_ui_elements)
+    app_list_1 = []
     for (k, v) in appsd.items():
-        appsl1.append([k, len(v)])
-    appsl1 = sorted(appsl1, key=lambda x: x[1], reverse=True)
+        app_list_1.append([k, len(v)])
+    app_list_1 = sorted(app_list_1, key=lambda x: x[1], reverse=True)
 
     _ns = []
 
@@ -140,7 +137,7 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
     c_apps = []
     c_cats = []
     for _n in _ns:
-        c_cat = appsl1[_n][0]
+        c_cat = app_list_1[_n][0]
         c_cats.append(c_cat)
         c_apps += appsd[c_cat]
     print('\n', c_cats)
@@ -234,7 +231,7 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
     for ui in uis:
         fit_uis = [x for x in x_ids2 if ui == x[0].split('_')[0]]
         fit_uis = sorted(fit_uis, key=lambda x: (
-        int(x[3].split(',')[1]), 1 / (int(x[3].split(',')[3]) - int(x[3].split(',')[1]))))
+            int(x[3].split(',')[1]), 1 / (int(x[3].split(',')[3]) - int(x[3].split(',')[1]))))
         fit_uis_bk = [x for x in real_data_bk_c if ui == x[1]][0][-1]
         fit_ui_banks.append(fit_uis_bk)
         st_id_list = []
@@ -262,8 +259,8 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
         end_id_list.append(st_id_list[-1])
 
     real_data_id0 = real_data_id.copy()
-    real_data_id = [x[:g_sequence_len] for x in real_data_id]
-    real_data_id1 = [np.pad(x, (0, g_sequence_len - len(x))) for x in real_data_id]
+    real_data_id = [x[:generator_sequence_len] for x in real_data_id]
+    real_data_id1 = [np.pad(x, (0, generator_sequence_len - len(x))) for x in real_data_id]
     endtime = time.time();
     dtime = endtime - starttime
     print("\nTime for loading real world data：%.8s s" % dtime)
@@ -298,8 +295,9 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
     '''
     Build the network
     '''
-    generator = Generator(VOCAB_SIZE, g_emb_dim, g_hidden_dim, opt.cuda)
-    discriminator = Discriminator(d_num_class, VOCAB_SIZE, d_emb_dim, d_filter_sizes, d_num_filters, d_dropout)
+    generator = Generator(VOCAB_SIZE, generator_emb_dim, generator_hidden_dim, opt.cuda)
+    discriminator = Discriminator(discriminator_num_class, VOCAB_SIZE, discriminator_emb_dim,
+                                  discriminator_filter_sizes, discriminator_num_filters, discriminator_dropout)
     if opt.cuda:
         generator = generator.cuda()
         discriminator = discriminator.cuda()
@@ -337,7 +335,7 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
             start_st = np.expand_dims(start_st, axis=1)
             start_st = Variable(torch.Tensor(start_st).long())
 
-            samples = generator.sample(BATCH_SIZE, g_sequence_len, start_st)
+            samples = generator.sample(BATCH_SIZE, generator_sequence_len, start_st)
             samples1, samples_tree, samples_imgdir, samples0, real_DT, samples1_e, samples_lenth = get_samples(samples,
                                                                                                                x_info,
                                                                                                                x_ids,
@@ -421,7 +419,7 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
         for p in range(4):
             NEGATIVE_FILE1 = NEGATIVE_FILE + '\\' + str(total_batch) + '\\gene'
 
-            #samples_lenth = generate_samples(generator, BATCH_SIZE, GENERATED_NUM, NEGATIVE_FILE1, x_info, x_ids,
+            # samples_lenth = generate_samples(generator, BATCH_SIZE, GENERATED_NUM, NEGATIVE_FILE1, x_info, x_ids,
             ##                                 start_id_list, end_id_list, bank_dict)
             NEGATIVE_FILEtxt = NEGATIVE_FILE + '\\' + str(total_batch) + '\\gene.txt'
             dis_data_iter = DisDataIter(real_data_id1, NEGATIVE_FILEtxt, BATCH_SIZE)
@@ -456,6 +454,7 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
         print('total_d_loss ', total_loss)
         print('f_d_loss ', f_loss)
 
+
 def get_cluster_score(x_e, x_e_label):
     n = len(x_e_label)
     v = []
@@ -463,7 +462,7 @@ def get_cluster_score(x_e, x_e_label):
     for m in range(n):
         z = 0
         per_num = len(x_e_label[m])
-        label_num = [os.path.basename(os.path.dirname(x)) for x in x_e_label[m]] # 有多少label
+        label_num = [os.path.basename(os.path.dirname(x)) for x in x_e_label[m]]  # 有多少label
         n_class = []
         label_num1 = []
         i = -1
@@ -475,13 +474,13 @@ def get_cluster_score(x_e, x_e_label):
             if len(label_num1) == 0:
                 label_num1 = color
             else:
-                label_num1 = np.concatenate((label_num1, color), axis = 0)
+                label_num1 = np.concatenate((label_num1, color), axis=0)
 
-        if per_num ==1:
+        if per_num == 1:
             v.append(1.0)
         else:
-            k_clusters =  len(n_class)
-            if(k_clusters >1):
+            k_clusters = len(n_class)
+            if (k_clusters > 1):
                 km = KMeans(n_clusters=k_clusters, random_state=0).fit(x_e[m])
                 _clusters = km.labels_
                 labels = np.zeros_like(_clusters)
@@ -495,5 +494,4 @@ def get_cluster_score(x_e, x_e_label):
                 v.append(0.0)
         j += 1
     val = np.mean(v)
-    return(val)
-
+    return (val)

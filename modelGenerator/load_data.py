@@ -3,6 +3,8 @@
 import os,random,csv
 import numpy as np
 
+
+# Load UI-Elements
 def load_dataset(ui_path):
     count = 0
     ui_dictionary = {}
@@ -17,6 +19,7 @@ def load_dataset(ui_path):
     print('Total_GUI_num: ', count)
     return ui_dictionary
 
+#Split dataset randomly
 def split_valid_datasets(data, r1 = 0.9, r2 = 0.94):
     available_apps = list(data.keys())
     number_of_apps = len(available_apps)
@@ -47,7 +50,8 @@ def write_file(path_file_name,_str):
             print(f)
     with open(path_file_name, "a") as f:
         f.write(_str)
-        
+
+# read the selected apps from the file
 def read_valid_file(_file):
     with open(_file, 'r') as f:
         apps = f.read()
@@ -146,7 +150,7 @@ def load_data(cutted_resized_ui_elements,data_dir):
     for app in test_apps:
         write_file(_file, app + ',')
 
-    # read the selected apps from the file
+
     train_apps, valid_apps, test_apps = read_valid_file(_file)
 
     _train_file = data_dir + '\\train_ui.txt'
