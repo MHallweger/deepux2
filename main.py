@@ -1,6 +1,5 @@
 import os
 import sys
-import argparse
 
 import torch
 import torch.nn as nn
@@ -20,6 +19,9 @@ from PySide2 import QtWidgets
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
+
+# Console
+import fire
 
 import tkinter as tk
 from xml.dom import minidom
@@ -182,19 +184,19 @@ class Ui_mainWindow(object):
         self.pushButton_8.setIconSize(QSize(25, 25))
         self.pushButton_8.raise_()
 
-        self.pushButton_1.clicked.connect(save_subtree)  # Cut UI's
-        self.pushButton_2.clicked.connect(load_data_for_model)  # Load UI Data
-        self.pushButton_3.clicked.connect(generateModel)  # Generate Model
-        self.pushButton_4.clicked.connect(generate_categories)  # Generate Categories
-        self.pushButton_5.clicked.connect(generate_generators)  # Generate Generators
-        self.pushButton_6.clicked.connect(generate_uis)  # Generate UI Suggestions
-        self.pushButton_7.clicked.connect(use_own_data_set)  # Use own Data Set
-        self.pushButton_8.clicked.connect(start_recalculation)  # Start recalculation
+        self.pushButton_1.clicked.connect(self.save_subtree)  # Cut UI's
+        self.pushButton_2.clicked.connect(self.load_data_for_model)  # Load UI Data
+        self.pushButton_3.clicked.connect(self.generateModel)  # Generate Model
+        self.pushButton_4.clicked.connect(self.generate_categories)  # Generate Categories
+        self.pushButton_5.clicked.connect(self.generate_generators)  # Generate Generators
+        self.pushButton_6.clicked.connect(self.generate_uis)  # Generate UI Suggestions
+        self.pushButton_7.clicked.connect(self.use_own_data_set)  # Use own Data Set
+        self.pushButton_8.clicked.connect(self.start_recalculation)  # Start recalculation
 
         # Actions
         self.action_ueber = QAction(mainWindow)
         self.action_ueber.setObjectName(u"action_ueber")
-        self.action_ueber.triggered.connect(about)
+        self.action_ueber.triggered.connect(self.about)
         self.action_ueber.setIcon(icon)
 
         # Lines
@@ -384,7 +386,9 @@ if __name__ == '__main__':
     if not os.path.exists(results_pre_dir):
         os.makedirs(results_pre_dir)
 
-    # TODO: Implement console functionality
+    # Console-call
+    # https://stackoverflow.com/a/44360294
+    fire.Fire(Ui_mainWindow)
 
     # Build UI
     app = QtWidgets.QApplication(sys.argv)
