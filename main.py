@@ -40,7 +40,7 @@ class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         if not mainWindow.objectName():
             mainWindow.setObjectName(u"mainWindow")
-        mainWindow.setFixedSize(1143, 922)
+        mainWindow.setFixedSize(1143, 760)
         mainWindow.setMouseTracking(False)
         mainWindow.setWindowIcon(QIcon(u"resources/images/bulb.png"))
 
@@ -116,7 +116,7 @@ class Ui_mainWindow(object):
         self.label_5.raise_()
         self.label_6 = QLabel(self.centralwidget)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(22, 646, 101, 31))
+        self.label_6.setGeometry(QRect(22, 490, 101, 31))
         self.label_6.setFont(font1)
         self.label_6.setFocusPolicy(Qt.NoFocus)
         self.label_6.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
@@ -124,7 +124,7 @@ class Ui_mainWindow(object):
         self.label_6.raise_()
         self.label_7 = QLabel(self.centralwidget)
         self.label_7.setObjectName(u"label_7")
-        self.label_7.setGeometry(QRect(532, 646, 191, 31))
+        self.label_7.setGeometry(QRect(532, 490, 191, 31))
         self.label_7.setFont(font2)
         self.label_7.setFocusPolicy(Qt.NoFocus)
         self.label_7.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
@@ -134,47 +134,58 @@ class Ui_mainWindow(object):
         # Icons
         icon = QIcon()
         icon.addFile(u"resources/images/information-button.png", QSize(), QIcon.Normal, QIcon.Off)
-        icon2 = QIcon()
-        icon2.addFile(u"resources/images/folder.png", QSize(), QIcon.Normal, QIcon.Off)
-        icon3 = QIcon()
-        icon3.addFile(u"resources/images/gear.png", QSize(), QIcon.Normal, QIcon.Off)
+
+        # Label-Icons
+        self.label_icon_1 = QLabel(self.centralwidget)
+        self.label_icon_1.setObjectName(u"label_icon_1")
+        self.label_icon_1.setGeometry(QRect(100,493,25,25))
+        self.label_icon_1.setStyleSheet(u"")
+        self.label_icon_1.setPixmap(QPixmap(u"resources/images/gear.png"))
+        self.label_icon_1.setScaledContents(True)
+        self.label_icon_1.raise_()
+
+        self.label_icon_2 = QLabel(self.centralwidget)
+        self.label_icon_2.setObjectName(u"label_icon_2")
+        self.label_icon_2.setGeometry(QRect(705,493,25,25))
+        self.label_icon_2.setStyleSheet(u"")
+        self.label_icon_2.setPixmap(QPixmap(u"resources/images/folder.png"))
+        self.label_icon_2.setScaledContents(True)
+        self.label_icon_2.raise_()
 
         # Buttons
         self.pushButton_1 = QPushButton(self.centralwidget)
         self.pushButton_1.setObjectName(u"pushButton_1")
-        self.pushButton_1.setGeometry(QRect(20, 690, 131, 51))
+        self.pushButton_1.setGeometry(QRect(20, 535, 131, 51))
         self.pushButton_1.raise_()
         self.pushButton_2 = QPushButton(self.centralwidget)
         self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setGeometry(QRect(180, 690, 131, 51))
+        self.pushButton_2.setGeometry(QRect(180, 535, 131, 51))
         self.pushButton_2.raise_()
         self.pushButton_3 = QPushButton(self.centralwidget)
         self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setGeometry(QRect(340, 690, 131, 51))
+        self.pushButton_3.setGeometry(QRect(340, 535, 131, 51))
         self.pushButton_3.raise_()
         self.pushButton_4 = QPushButton(self.centralwidget)
         self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setGeometry(QRect(20, 775, 131, 51))
+        self.pushButton_4.setGeometry(QRect(20, 610, 131, 51))
         self.pushButton_4.raise_()
         self.pushButton_5 = QPushButton(self.centralwidget)
         self.pushButton_5.setObjectName(u"pushButton_5")
-        self.pushButton_5.setGeometry(QRect(180, 775, 131, 51))
+        self.pushButton_5.setGeometry(QRect(180, 610, 131, 51))
         self.pushButton_5.raise_()
         self.pushButton_6 = QPushButton(self.centralwidget)
         self.pushButton_6.setObjectName(u"pushButton_6")
-        self.pushButton_6.setGeometry(QRect(340, 775, 131, 51))
+        self.pushButton_6.setGeometry(QRect(340, 610, 131, 51))
         self.pushButton_6.raise_()
         self.pushButton_7 = QPushButton(self.centralwidget)
         self.pushButton_7.setObjectName(u"pushButton_7")
-        self.pushButton_7.setGeometry(QRect(532, 690, 151, 51))
+        self.pushButton_7.setGeometry(QRect(532, 535, 151, 51))
         self.pushButton_7.setToolTipDuration(3)
-        self.pushButton_7.setIcon(icon2)
         self.pushButton_7.setIconSize(QSize(25, 25))
         self.pushButton_7.raise_()
         self.pushButton_8 = QPushButton(self.centralwidget)
         self.pushButton_8.setObjectName(u"pushButton_8")
-        self.pushButton_8.setGeometry(QRect(532, 775, 151, 51))
-        self.pushButton_8.setIcon(icon3)
+        self.pushButton_8.setGeometry(QRect(532, 610, 151, 51))
         self.pushButton_8.setIconSize(QSize(25, 25))
         self.pushButton_8.raise_()
 
@@ -194,21 +205,15 @@ class Ui_mainWindow(object):
         self.action_ueber.setIcon(icon)
 
         # Lines
-        self.line_1 = QFrame(self.centralwidget)
-        self.line_1.setObjectName(u"line_1")
-        self.line_1.setGeometry(QRect(-10, 470, 1181, 16))
-        self.line_1.setFrameShape(QFrame.HLine)
-        self.line_1.setFrameShadow(QFrame.Sunken)
-        self.line_1.raise_()
         self.line_2 = QFrame(self.centralwidget)
         self.line_2.setObjectName(u"line_2")
-        self.line_2.setGeometry(QRect(0, 623, 1181, 16))
+        self.line_2.setGeometry(QRect(0, 465, 1181, 16))
         self.line_2.setFrameShape(QFrame.HLine)
         self.line_2.setFrameShadow(QFrame.Sunken)
         self.line_2.raise_()
         self.line_3 = QFrame(self.centralwidget)
         self.line_3.setObjectName(u"line_3")
-        self.line_3.setGeometry(QRect(501, 630, 20, 311))
+        self.line_3.setGeometry(QRect(501, 472, 20, 311))
         self.line_3.setFrameShape(QFrame.VLine)
         self.line_3.setFrameShadow(QFrame.Sunken)
         self.line_3.raise_()
@@ -216,7 +221,7 @@ class Ui_mainWindow(object):
         # ProgressBar
         self.progressBar = QProgressBar(self.centralwidget)
         self.progressBar.setObjectName(u"progressBar")
-        self.progressBar.setGeometry(QRect(20, 850, 485, 23))
+        self.progressBar.setGeometry(QRect(20, 690, 485, 23))
         self.progressBar.setValue(50)
         self.progressBar.raise_()
 
@@ -250,7 +255,7 @@ class Ui_mainWindow(object):
         self.label_3.setText("")
         self.label_4.setText("")
         self.label_5.setText(QCoreApplication.translate("mainWindow", u"", None))
-        self.label_6.setText(QCoreApplication.translate("mainWindow", u"Action", None))
+        self.label_6.setText(QCoreApplication.translate("mainWindow", u"Actions", None))
         self.label_7.setText(QCoreApplication.translate("mainWindow", u"Individualization", None))
 
         self.label_1.setStatusTip("Suggestion 1")
@@ -271,14 +276,14 @@ class Ui_mainWindow(object):
         self.pushButton_7.setText(QCoreApplication.translate("mainWindow", u"Use own Data-Set", None))
         self.pushButton_8.setText(QCoreApplication.translate("mainWindow", u"Start recalculation", None))
 
-        self.pushButton_1.setStatusTip("Cut the existing screenshots into a specified substructure")
+        self.pushButton_1.setStatusTip("Cut the existing Screenshots into a specified substructure")
         self.pushButton_2.setStatusTip("Prepare the cutted user interface elements for the neural network")
         self.pushButton_3.setStatusTip("Train models with the help of the siamese network")
-        self.pushButton_4.setStatusTip("???")
-        self.pushButton_5.setStatusTip("Generate GAN-geneator ")
-        self.pushButton_6.setStatusTip("Create new inspiring user interfaces with the help of the generator ")
-        self.pushButton_7.setStatusTip("Open a folder where you can insert your own screenshots. These will be used for future calculations")
-        self.pushButton_8.setStatusTip("Start a recalculation with the new screenshots")
+        self.pushButton_4.setStatusTip("Generate pairs (using the model) from the individual cropped user interface elements and categorize them")
+        self.pushButton_5.setStatusTip("Generate GAN-Generator")
+        self.pushButton_6.setStatusTip("Create new inspiring user interfaces with the help of the generator")
+        self.pushButton_7.setStatusTip("Open a folder where you can insert your own Screenshots. These will be used for future calculations")
+        self.pushButton_8.setStatusTip("Start a recalculation with the new Screenshots")
 
 # Create a "about" Message-Box
 def about(self):
@@ -383,6 +388,8 @@ if __name__ == '__main__':
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
 
+    if not os.path.exists(models_torch_dir):
+        os.makedirs(models_torch_dir)
 
     # Console-call
     # https://stackoverflow.com/a/44360294
