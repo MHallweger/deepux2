@@ -9,7 +9,7 @@ from PySide2.QtWidgets import QLabel, QPushButton, QWidget, QFrame, QStatusBar, 
 
 from GUIGAN_main import build_result_uis
 import build_generator
-from get_style_emb import get_style_emb
+from get_style_emb import get_style_embeddings
 from application.modelGenerator.load_data import load_data
 from application.modelGenerator.load_subtrees import load_subtrees
 from application.modelGenerator.train_siamese_net import train_siamese
@@ -336,7 +336,7 @@ def generate_uis():
 
 def generate_categories():
     print("Generate Categories Button clicked!")
-    get_style_emb(models_torch_dir,app_details_csv,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
+    get_style_embeddings(models_torch_dir, app_details_csv, categories_app_emb, cutted_ui_elements, cutted_resized_ui_elements)
 
 def use_own_data_set():
     print("Use own Data Set Button clicked!")
