@@ -8,7 +8,7 @@ from PySide2.QtWidgets import QLabel, QPushButton, QWidget, QFrame, QStatusBar, 
     QMenuBar, QMenu, QMessageBox
 
 from GUIGAN_main import build_result_uis
-from build_generator import build_generator
+import build_generator
 from get_style_emb import get_style_emb
 from application.modelGenerator.load_data import load_data
 from application.modelGenerator.load_subtrees import load_subtrees
@@ -286,7 +286,7 @@ class Ui_mainWindow(object):
         self.pushButton_8.setStatusTip("Start a recalculation with the new Screenshots")
 
 # Create a "about" Message-Box
-def about(self):
+def about():
     widget = QWidget()
     widget.setWindowIcon(QIcon(u"resources/images/bulb.png"))
     QMessageBox.about(
@@ -298,6 +298,7 @@ def about(self):
         "<p><b>Marvin Nicholas Hallweger</b> <br>marvin_nicholas.hallweger@smail.th-koeln.de</p>"
         "<p><h3><u>And supported by:</h3></u></p>"
         "<p><b>Prof. Dr. Matthias Böhmer</b> <br>matthias.boehmer@th-koeln.de</p>",
+        "<p><b>David Petersen</b> <br>david.petersen@th-koeln.de</p>",
     )
 
 # Method for changing label images
@@ -312,39 +313,38 @@ def insert_label_images(self, image1, image2, image3, image4):
     if image4 is not None:
         self.label_4.setPixmap(QPixmap(image4))
 
-def save_subtree(self):
+def save_subtree():
     print("Cut UI's Button clicked!")
-    save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements,
-    cutted_resized_ui_elements)
+    save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements, cutted_resized_ui_elements)
 
-def load_data_for_model(self):
+def load_data_for_model():
     print("Load UI Data Button clicked!")
     load_data(cutted_resized_ui_elements,data_dir)
     load_subtrees(cutted_resized_ui_elements,data_dir)
 
-def generateModel(self):
+def generateModel():
     print("Generate Model Button clicked!")
     train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir)
 
-def generate_generators(self):
+def generate_generators():
     print("Generate Generators Button clicked!")
-    build_generator(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
+    build_generator.build_generator(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
 
-def generate_uis(self):
+def generate_uis():
     print("Generate UI Suggestions Button clicked!")
     build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
 
-def generate_categories(self):
+def generate_categories():
     print("Generate Categories Button clicked!")
     get_style_emb(models_torch_dir,app_details_csv,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
 
-def use_own_data_set(self):
+def use_own_data_set():
     print("Use own Data Set Button clicked!")
     path = "C:\\Users\\Marvin\\Desktop\\HierAblegen"
     path = os.path.realpath(path)
     os.startfile(path)
 
-def choose_xml_file(self):
+def choose_xml_file():
     print("Choose .xml file Button clicked!")
 
     choosenXMLFile = fd.askopenfilename(
@@ -354,10 +354,14 @@ def choose_xml_file(self):
     print("########## XML-FILE ##########")
     print(xmldoc.toxml())
 
-def start_recalculation(self):
+def start_recalculation():
     print("Start recalculation Button clicked!")
 
 if __name__ == '__main__':
+    # Console-call
+    # Call. python main.py [function]
+    fire.Fire(Ui_mainWindow)
+
     if not os.path.exists(json_rico):
         os.makedirs(json_rico)
 
@@ -390,10 +394,6 @@ if __name__ == '__main__':
 
     if not os.path.exists(models_torch_dir):
         os.makedirs(models_torch_dir)
-
-    # Console-call
-    # https://stackoverflow.com/a/44360294
-    fire.Fire(Ui_mainWindow)
 
     # Build UI
     app = QtWidgets.QApplication(sys.argv)

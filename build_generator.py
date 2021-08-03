@@ -84,10 +84,10 @@ class GANLoss(nn.Module):
         return -torch.sum(loss)
 
 # ================== Parameter Definition =================
-parser = argparse.ArgumentParser(description='Training Parameter')
-parser.add_argument('--cuda', action='store', default=0, type=int)
-opt = parser.parse_args()
-print(opt)
+# parser = argparse.ArgumentParser(description='Training Parameter')
+# parser.add_argument('--cuda', action='store', default=0, type=int)
+# opt = parser.parse_args()
+# print(opt)
 
 # Basic Training Paramters
 SEED = 88
