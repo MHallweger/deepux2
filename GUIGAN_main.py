@@ -72,6 +72,7 @@ def generate_samples(model,batch_size,generated_num,output_file,x_info,x_ids,sta
     return samples_lenth
 
 def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements):
+    print("build_result_uis function started!")
     random.seed(SEED)
     enable_cuda = True
 

@@ -113,6 +113,7 @@ bank_dict = {'1': 2, '2': 6, '3': 10, '4': 20, '5': 35, '6': 50, '7': 70, '8': 1
 
 
 def build_generator(app_details_csv, models_dir, gui_information_dir, control_elements_id_dir, categories_app_emb, cutted_ui_elements, cutted_resized_ui_elements):
+    print("build_generator function started!")
     random.seed(SEED)
 
     opt.cuda = 0

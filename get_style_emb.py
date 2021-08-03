@@ -102,6 +102,7 @@ def get_ui_info(train_uis,txt_dir):
 
 
 def get_style_emb(models_torch_dir, app_details_csv, categories_app_emb, cutted_ui_elements, cutted_resized_ui_elements):
+    print("get_style_emb function started!")
     input_shape = (256, 512, 3)
     net = Siamese()
     net.cuda()

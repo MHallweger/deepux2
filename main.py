@@ -314,8 +314,7 @@ def insert_label_images(self, image1, image2, image3, image4):
 
 def save_subtree(self):
     print("Cut UI's Button clicked!")
-    save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements,
-    cutted_resized_ui_elements)
+    save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements, cutted_resized_ui_elements)
 
 def load_data_for_model(self):
     print("Load UI Data Button clicked!")
