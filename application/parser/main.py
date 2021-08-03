@@ -145,7 +145,7 @@ def load_file(name):
     jsonStr = toJson(title,listOfViewObj)
 
     nameOfFile = ntpath.basename(name)
-    f = open(nameOfFile.split(".")[0] + ".json", "a")
+    f = open("../../folders/Rico/jsons/"+nameOfFile.split(".")[0] + ".json", "a")
     f.write(jsonStr)
     f.close()
 
