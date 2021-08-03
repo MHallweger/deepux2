@@ -135,7 +135,7 @@ def get_s_app(file_csv, cd, app=True):
 
 #-------------------main start-----------------------------------
 def load_data(cutted_resized_ui_elements,data_dir):
-
+    print("load_data function started!")
     ui_dictionary = load_dataset(cutted_resized_ui_elements)
 
     # write the selected apps to the file

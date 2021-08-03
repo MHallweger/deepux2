@@ -108,6 +108,7 @@ def dirs_to_images_and_labels(batch_dirs, height=128, width=128, channel=3, resi
     return image_pairs
 
 def train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir):
+    print("train_siamese function started!")
     input_shape = (256, 512, 3)
     learning_rate = 0.00005
     batch_size = 8

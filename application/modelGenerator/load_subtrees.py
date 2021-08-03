@@ -94,7 +94,7 @@ def get_soft_all_image_pair(dictionary, available_apps,ui_c=20,s_num=10):
 
 
 def load_subtrees(cutted_resized_ui_elements,data_dir):
-
+    print("load_subtrees function started!")
     dictionary = load_dataset(cutted_resized_ui_elements)
     _file = data_dir + '\data.txt'
 

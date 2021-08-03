@@ -243,6 +243,7 @@ def save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elem
     #dsts_dir = r'.\p_app_Td_sts'  # cut subtree imgs
     #resized_dir = r'.\p_app_Td_sts_resized'  # resize subtree imgs
 
+    print("save_subtree_info function started!")
     if len(os.listdir(gui_dir_rico))  > 0:
 
         for app in os.listdir(gui_dir_rico):
