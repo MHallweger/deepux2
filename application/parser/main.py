@@ -1,6 +1,14 @@
 import json
 import ntpath
+import os
+import sys
 
+from PIL import Image
+import os
+import PIL
+import glob
+
+sys.path.append(r'application/parser')
 
 class Acvitiy:
     def __init__(self, activityName, root):
@@ -33,9 +41,11 @@ class ViewObj:
         self.children = []
 
 
+li_files = r'..\..\folders\li_files'
 
-def load_file(name):
-
+def parse_li_to_json(name):
+    """load_file(name)
+    """
     listOfViewObj = []
     lines = []
     file = open(name, "r", encoding="ISO-8859-1", errors='ignore')
@@ -79,6 +89,8 @@ def load_file(name):
         resourceId = -1
         mLeft = -1
         mRight = -1
+
+
         for attributes in line.lstrip().split():
             if 'getHeight' in attributes:
                 layout_height = attributes.split("=")[1].split(",")[1]
@@ -105,15 +117,9 @@ def load_file(name):
             elif 'mTop' in attributes:
                 mTop = attributes.split("=")[1].split(",")[1]
 
+        bounds = [int(mLeft),int(getLocationOnScreen_y),int(mRight),int(mBottom)+int(getLocationOnScreen_y)]
 
-        ##bounds = [int(mLeft),int(mTop),int(mRight),int(mBottom)]
-
-        bounds = [int(mLeft),int(mBottom),int(mRight)+int(layout_width),int(mBottom)+int(layout_height)]
-
-
-        print(android_class)
         lineIndex += 1
-
         for char in line:
             if char.isspace() is False:
                 print("ID: " + str(id) + " Spaces: " + str(spaces))
@@ -137,15 +143,33 @@ def load_file(name):
 
             spaces += 1
 
-    ##title
-
-
 
     listOfViewObj = matchChildren(listOfViewObj)
     jsonStr = toJson(title,listOfViewObj)
+    saveJson(title,name,jsonStr)
 
-    nameOfFile = ntpath.basename(name)
-    f = open("../../folders/Rico/jsons/"+nameOfFile.split(".")[0] + ".json", "a")
+
+def saveJson(title,fileName,jsonStr):
+    nameOfFile = ntpath.basename(fileName)
+    realName = nameOfFile.split(".")[0]
+    path = "folders/Rico/jsons/"
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    li_files_image = 'folders\\li_files\\'+ realName + ".png"
+    if not os.path.isfile(li_files_image):
+        print("Image from the li file was not found!")
+
+    pathOfOutputImage = "folders/Rico/gui/" + title
+    if not os.path.exists(pathOfOutputImage):
+        os.makedirs(pathOfOutputImage)
+
+    image = Image.open(li_files_image)
+    size = 540, 960
+    im_resized = image.resize(size, Image.ANTIALIAS)
+    im_resized.save(pathOfOutputImage+'/'+realName + ".png", "PNG")
+
+    f = open("folders/Rico/jsons/"+nameOfFile.split(".")[0] + ".json", "a")
     f.write(jsonStr)
     f.close()
 
@@ -180,8 +204,11 @@ def getParent(objects, index, spaces):
             index -= 1
 
 
+
 def clearString(string):
-    # clean String
+    """clearString(string)
+    Clean up the passing string
+    """
     string = string.replace('\x00', '')
     string = string.replace('\0', '')
     string = string.replace('\0', '')
@@ -190,9 +217,16 @@ def clearString(string):
     string = string.replace('4', '')
     string = string.replace('', '')
     string = string.replace('', '')
-
+    string = string.replace('i\u00fb', '')
+    string = string.replace('\u0003x\u0081', '')
+    string = string.replace('\u0003x', '')
+    string = string.replace('\u0081', '')
+    string = string.replace('z   ', '')
     return string
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    load_file('test14.li')
+
+    if not os.path.exists(li_files):
+        os.makedirs(li_files)
+
+    parse_li_to_json(li_files + '\\' + 'test18.li')

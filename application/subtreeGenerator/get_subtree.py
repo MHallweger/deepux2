@@ -1,24 +1,23 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import json,os,shutil
-import matplotlib.pyplot as plt
+import json,os
 from PIL import Image
 
 def get_json(cd):
     with open(cd, encoding='utf-8') as f:
         line = f.read()
-        d = json.loads(line)
+        json_file = json.loads(line)
         f.close()
-    a = d['activity']['root']
-    return a
+
+    return json_file['activity']['root']
 
 def get_width(bounds):
-    assert bounds[2]-bounds[0]>0
+    assert bounds[2]-bounds[0] > 0
     return bounds[2]-bounds[0]
 
 def get_height(bounds):
-    assert bounds[3]-bounds[1]>0
+    assert bounds[3]-bounds[1] > 0
     return bounds[3]-bounds[1]
 
 def get_bound_asname(bound):
@@ -27,7 +26,7 @@ def get_bound_asname(bound):
         _b += str(b)+','
     return _b
 
-def get_layerNum(c):
+def get_layerNumber(c):
     return int(c.split('_')[-1].split('-')[0])
 
 def get_className(c):
@@ -96,7 +95,7 @@ def DeleteOverSize(_list):
     list_ddsf_leaf4 = []
     for c in _list:
         w = get_width(c[2]); h = get_height(c[2])
-        if w/h>=30 or h/w>= 50:
+        if w/h >= 30 or h/w >= 50:
             print('illegal aspect ratio')
             continue
         elif h >= 1280 or h <5:
@@ -209,7 +208,7 @@ def get_component_byjson(json_file):
 
     c_for_del = [] # Nodes whose width exceeds the limit need to be pruned (delete all their children subtrees)
     width_r = 0.95
-    w_limit = 1440*width_r
+    w_limit = 1440 * width_r
     for (k,v) in node_fs_d.items():
         if len(v)>2:
             for c in v:
@@ -346,13 +345,12 @@ def get_component_byjson(json_file):
     #------------------------------------------------------------------------------------#
     '''delete st without enough area'''
     S0 = 1440 * 2560 / 2 # half area of GUI
-    #S0 = 1080 * 1920 / 2  # half area of GUI
     S = 0
     for x in list_ddsfcutfccb_ch1:
         S += get_width(x[2]) * get_height(x[2])
     if S <= S0:
         print('square unsatisfy')
-        #list_ddsfcutfccb_ch1 = []
+        ##list_ddsfcutfccb_ch1 = []
     else:
         print('square satisfy')
 
