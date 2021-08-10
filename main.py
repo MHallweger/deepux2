@@ -1,5 +1,10 @@
 import os
 import sys
+import tkinter
+from tkinter import filedialog
+from turtle import fd
+
+
 
 from PySide2 import QtWidgets
 from PySide2.QtCore import QRect, QSize, QCoreApplication, QMetaObject
@@ -9,7 +14,8 @@ from PySide2.QtWidgets import QLabel, QPushButton, QWidget, QFrame, QStatusBar, 
 
 from GUIGAN_main import build_result_uis
 import build_generator
-from get_style_emb import get_style_emb
+from application.parser.main import parse_li_to_json
+from get_style_emb import get_style_embeddings
 from application.modelGenerator.load_data import load_data
 from application.modelGenerator.load_subtrees import load_subtrees
 from application.modelGenerator.train_siamese_net import train_siamese
@@ -19,7 +25,6 @@ from application.subtreeGenerator.save_subtree_info import save_subtree_info
 import fire
 
 from xml.dom import minidom
-from tkinter import filedialog as fd
 
 json_rico = r'.\folders\Rico\jsons'  # Rico Json Dateien
 gui_dir_rico = r'.\folders\Rico\gui'  # Rico
@@ -34,6 +39,7 @@ categories_app_emb = r'.\folders\categories_app_emb'
 models_dir = r'.\folders\models'
 results_dir = r'.\folders\results'
 results_pre_dir = r'.\folders\results_pre'
+li_files = r'.\folders\li_files'
 
 # UI
 class Ui_mainWindow(object):
@@ -189,6 +195,12 @@ class Ui_mainWindow(object):
         self.pushButton_8.setIconSize(QSize(25, 25))
         self.pushButton_8.raise_()
 
+        self.pushButton_9 = QPushButton(self.centralwidget)
+        self.pushButton_9.setObjectName(u"pushButton_9")
+        self.pushButton_9.setGeometry(QRect(700, 535, 151, 51))
+        self.pushButton_9.setIconSize(QSize(25, 25))
+        self.pushButton_9.raise_()
+
         self.pushButton_1.clicked.connect(save_subtree)  # Cut UI's
         self.pushButton_2.clicked.connect(load_data_for_model)  # Load UI Data
         self.pushButton_3.clicked.connect(generateModel)  # Generate Model
@@ -197,6 +209,7 @@ class Ui_mainWindow(object):
         self.pushButton_6.clicked.connect(generate_uis)  # Generate UI Suggestions
         self.pushButton_7.clicked.connect(use_own_data_set)  # Use own Data Set
         self.pushButton_8.clicked.connect(start_recalculation)  # Start recalculation
+        self.pushButton_9.clicked.connect(open_parser_window)  # Start open_parser_window
 
         # Actions
         self.action_ueber = QAction(mainWindow)
@@ -275,6 +288,8 @@ class Ui_mainWindow(object):
         self.pushButton_6.setText(QCoreApplication.translate("mainWindow", u"Generate UI Suggestions", None))
         self.pushButton_7.setText(QCoreApplication.translate("mainWindow", u"Use own Data-Set", None))
         self.pushButton_8.setText(QCoreApplication.translate("mainWindow", u"Start recalculation", None))
+        self.pushButton_9.setText(QCoreApplication.translate("mainWindow", u"*.li Parser", None))
+
 
         self.pushButton_1.setStatusTip("Cut the existing Screenshots into a specified substructure")
         self.pushButton_2.setStatusTip("Prepare the cutted user interface elements for the neural network")
@@ -284,6 +299,7 @@ class Ui_mainWindow(object):
         self.pushButton_6.setStatusTip("Create new inspiring user interfaces with the help of the generator")
         self.pushButton_7.setStatusTip("Open a folder where you can insert your own Screenshots. These will be used for future calculations")
         self.pushButton_8.setStatusTip("Start a recalculation with the new Screenshots")
+
 
 # Create a "about" Message-Box
 def about():
@@ -336,7 +352,7 @@ def generate_uis():
 
 def generate_categories():
     print("Generate Categories Button clicked!")
-    get_style_emb(models_torch_dir,app_details_csv,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
+    get_style_embeddings(models_torch_dir, app_details_csv, categories_app_emb, cutted_ui_elements, cutted_resized_ui_elements)
 
 def use_own_data_set():
     print("Use own Data Set Button clicked!")
@@ -356,6 +372,14 @@ def choose_xml_file():
 
 def start_recalculation():
     print("Start recalculation Button clicked!")
+
+def open_parser_window():
+    root = tkinter.Tk()
+    root.withdraw()
+    file_path = filedialog.askopenfilename()
+    parse_li_to_json(file_path)
+    print(file_path)
+
 
 if __name__ == '__main__':
     # Console-call
@@ -394,6 +418,11 @@ if __name__ == '__main__':
 
     if not os.path.exists(models_torch_dir):
         os.makedirs(models_torch_dir)
+
+    if not os.path.exists(li_files):
+        os.makedirs(li_files)
+
+
 
     # Build UI
     app = QtWidgets.QApplication(sys.argv)

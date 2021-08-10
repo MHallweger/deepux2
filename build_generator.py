@@ -116,9 +116,9 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
     print("build_generator function started!")
     random.seed(SEED)
 
-    opt.cuda = 0
-    torch.cuda.set_device(opt.cuda)
-    opt.cuda = True
+    cuda = 0
+    torch.cuda.set_device(cuda)
+    cuda = True
 
     NEGATIVE_FILE = '.\samples'
 
@@ -299,10 +299,10 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
     '''
     Build the network
     '''
-    generator = Generator(VOCAB_SIZE, generator_emb_dim, generator_hidden_dim, opt.cuda)
+    generator = Generator(VOCAB_SIZE, generator_emb_dim, generator_hidden_dim, cuda)
     discriminator = Discriminator(discriminator_num_class, VOCAB_SIZE, discriminator_emb_dim,
                                   discriminator_filter_sizes, discriminator_num_filters, discriminator_dropout)
-    if opt.cuda:
+    if cuda:
         generator = generator.cuda()
         discriminator = discriminator.cuda()
 
@@ -317,7 +317,7 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
     else:
         gen_gan_loss = GANLoss()
 
-    if opt.cuda:
+    if cuda:
         gen_gan_loss = gen_gan_loss.cuda()
 
     gen_gan_optm = optim.Adam([{"params": generator.parameters()},
@@ -325,7 +325,7 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
 
     dis_criterion = nn.NLLLoss(reduction='sum')  # negative log likelihood loss
     dis_optimizer = optim.Adam(discriminator.parameters())
-    if opt.cuda:
+    if cuda:
         dis_criterion = dis_criterion.cuda()
 
     for total_batch in range(TOTAL_BATCH):
@@ -435,7 +435,7 @@ def build_generator(app_details_csv, models_dir, gui_information_dir, control_el
                     n += 1
                     data = Variable(data)
                     target = Variable(target)
-                    if opt.cuda:
+                    if cuda:
                         data, target = data.cuda(), target.cuda()
                     target = target.contiguous().view(-1)
                     pred = discriminator.forward(data)

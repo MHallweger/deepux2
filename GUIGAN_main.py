@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 from datetime import time
 from comm import get_samples
 import json
@@ -17,38 +14,36 @@ from comm import get_bank_size,get_Repository,get_list_wbk
 import sys
 from application.modelGenerator.load_data import get_s_app
 
-sys.path.append(r'.\StyleEmbedding')
-
 # Genrator Parameters
-g_emb_dim = 32
-g_hidden_dim = 32
-g_sequence_len = 30
+genrator_embeding_dimension = 32
+genrator_hidden_dimension = 32
+generator_sequence_length = 30
 
 # Basic Training Paramters
 SEED = 88
 BATCH_SIZE = 32
 TOTAL_BATCH = 1
-#TOTAL_BATCH = 10
-
 
 bank_dict = {'1':2, '2':6, '3':10, '4':20, '5':35, '6':50, '7':70, '8':100, '9':200, '10':300}
 pre_built = True
 
 def generate_samples(model,batch_size,generated_num,output_file,x_info,x_ids,start_id_list,end_id_list,bank_dict,pre_st=0):
+    ###Setup
+    torch.cuda.set_device(0)
 
     samples = []
     samples1 = []
-    torch.cuda.set_device(0)
+
     for _ in range(int(generated_num / batch_size)):
         if pre_st == 0:
             start_st = random.sample(start_id_list, batch_size)
             start_st = np.expand_dims(start_st, axis=1)
-        else:
-            start_st = [pre_st for c in range(batch_size)]
-        start_st = Variable(torch.Tensor(start_st).long())
-        sample = model.sample(BATCH_SIZE, g_sequence_len, start_st).cpu().data.numpy().tolist()
+        else:   
+            start_st = [pre_st for c in range(batch_size)]        
+        start_st = Variable(torch.Tensor(start_st).long())        
+        sample = model.sample(BATCH_SIZE, generator_sequence_length, start_st).cpu().data.numpy().tolist()
         samples.extend(sample)
-    samples1,samples_tree,samples_imgdir,samples0,real_DT,samples1_e,samples_lenth = get_samples(samples,x_info,x_ids,start_id_list,end_id_list,bank_dict)
+    samples1, samples_tree, samples_imgdir, samples0, real_DT,samples1_e, samples_lenth = get_samples(samples,x_info,x_ids,start_id_list,end_id_list,bank_dict)
     samples1 = samples1.cpu().data.numpy().tolist()
 
     with open(output_file+'.txt', 'w', encoding="utf-8") as fout:
@@ -77,7 +72,6 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
     random.seed(SEED)
     enable_cuda = True
 
-
     if not pre_built:
         NEGATIVE_FILE = results_dir
     else:
@@ -90,7 +84,7 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
     appsl1 = sorted(appsl1, key=lambda x: x[1], reverse=True)
 
     _ns = []
-    _n = 0;
+    _n = 0
     _ns.append(_n)  # News & Magazines
 
     c_apps = []
@@ -119,7 +113,7 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
             x_emb = np.concatenate((x_emb, _x_emb), axis=0)
             c_cat = c_cat + '_and_' + _cat
 
-    endtime = time.time();
+    endtime = time.time()
     dtime = endtime - starttime
     print("\nTime for loading training embedding：%.8s s" % dtime)
 
@@ -221,8 +215,8 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
         end_id_list.append(st_id_list[-1])
 
     real_data_id0 = real_data_id.copy()
-    real_data_id = [x[:g_sequence_len] for x in real_data_id]
-    real_data_id1 = [np.pad(x, (0, g_sequence_len - len(x))) for x in real_data_id]
+    real_data_id = [x[:generator_sequence_length] for x in real_data_id]
+    real_data_id1 = [np.pad(x, (0, generator_sequence_length - len(x))) for x in real_data_id]
     endtime = time.time();
     dtime = endtime - starttime
     print("\nTime for loading real world data：%.8s s" % dtime)
@@ -254,7 +248,7 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
 
     reduced_data1 = PCA(n_components=2).fit_transform(x_emb)
 
-    generator = Generator(VOCAB_SIZE, g_emb_dim, g_hidden_dim, enable_cuda)
+    generator = Generator(VOCAB_SIZE, genrator_embeding_dimension, genrator_hidden_dimension, enable_cuda)
 
     _save_path = os.path.join(models_dir, c_cat)
     if not os.path.exists(_save_path):

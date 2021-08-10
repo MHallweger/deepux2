@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 from PIL import ImageFile
 
-from application.subtreeGenerator.get_subtree import get_layerNum, get_resized_bounds, get_height, get_className, \
+from application.subtreeGenerator.get_subtree import get_layerNumber, get_resized_bounds, get_height, get_className, \
     get_component_byjson, get_width, compress_image
 
 
@@ -12,10 +12,10 @@ def get_clayer_nodes(Dom_list, layer1_ids=[]):
     Dom_list1 = Dom_list.copy()
     # Find all nodes in the first layer
     Dom_listids = [c[0] for c in Dom_list1]
-    r = np.min([get_layerNum(c) for c in Dom_listids])
+    r = np.min([get_layerNumber(c) for c in Dom_listids])
     print('\nr:', r)
     # Save all the shortest nodes in layer1_ids for the first search
-    layer1_ids += [c for c in Dom_listids if get_layerNum(c) == r and c not in layer1_ids]
+    layer1_ids += [c for c in Dom_listids if get_layerNumber(c) == r and c not in layer1_ids]
     print('layer1_ids:', layer1_ids)
     # Delete the nodes in first layer
     for c in Dom_list1:

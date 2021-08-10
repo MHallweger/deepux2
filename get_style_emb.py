@@ -101,7 +101,7 @@ def get_ui_info(train_uis,txt_dir):
     return x_info
 
 
-def get_style_emb(models_torch_dir, app_details_csv, categories_app_emb, cutted_ui_elements, cutted_resized_ui_elements):
+def get_style_embeddings(models_torch_dir, app_details_csv, categories_app_emb, cutted_ui_elements, cutted_resized_ui_elements):
     print("get_style_emb function started!")
     input_shape = (256, 512, 3)
     net = Siamese()
@@ -112,12 +112,12 @@ def get_style_emb(models_torch_dir, app_details_csv, categories_app_emb, cutted_
 
     appsl, appsd = get_s_app(app_details_csv, cutted_ui_elements)
 
-    for (cat, cat_apps) in appsd.items():
-        print('\ncategory: ', cat)
-        print('\ncategory_apps: ', cat_apps)
+    for (category, category_apps) in appsd.items():
+        print('\ncategory: ', category)
+        print('\ncategory_apps: ', category_apps)
         train_uis = []
         for app in os.listdir(cutted_resized_ui_elements):
-            if app in cat_apps:
+            if app in category_apps:
                 app_dir = os.path.join(cutted_resized_ui_elements, app)
                 for ui in os.listdir(app_dir):
                     ui_dir = os.path.join(app_dir, ui)
@@ -147,7 +147,7 @@ def get_style_emb(models_torch_dir, app_details_csv, categories_app_emb, cutted_
             else:
                 x_train_embedding = np.concatenate((x_train_embedding, emb), axis=0)
 
-        path_file_name_with_file = os.path.join(categories_app_emb, str(cat) + '.txt')
+        path_file_name_with_file = os.path.join(categories_app_emb, str(category) + '.txt')
         with open(path_file_name_with_file, "a") as f:
             for i in range(len(train_uis)):
                 ui = str(train_uis[i])
