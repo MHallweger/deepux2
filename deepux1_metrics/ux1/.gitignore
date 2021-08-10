@@ -1,0 +1,9 @@
+*.code-workspace
+data/
+.vscode/
+.idea/
+.ipynb_checkpoints/
+__pycache__/
+
+*.apk
+app_traverser/output/

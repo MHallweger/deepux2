@@ -3,6 +3,7 @@
 
 from datetime import time
 from comm import get_samples
+import json
 
 import os,time,random
 import numpy as np
@@ -42,14 +43,14 @@ def generate_samples(model,batch_size,generated_num,output_file,x_info,x_ids,sta
         if pre_st == 0:
             start_st = random.sample(start_id_list, batch_size)
             start_st = np.expand_dims(start_st, axis=1)
-        else:   
-            start_st = [pre_st for c in range(batch_size)]        
-        start_st = Variable(torch.Tensor(start_st).long())        
+        else:
+            start_st = [pre_st for c in range(batch_size)]
+        start_st = Variable(torch.Tensor(start_st).long())
         sample = model.sample(BATCH_SIZE, g_sequence_len, start_st).cpu().data.numpy().tolist()
         samples.extend(sample)
     samples1,samples_tree,samples_imgdir,samples0,real_DT,samples1_e,samples_lenth = get_samples(samples,x_info,x_ids,start_id_list,end_id_list,bank_dict)
     samples1 = samples1.cpu().data.numpy().tolist()
-    
+
     with open(output_file+'.txt', 'w', encoding="utf-8") as fout:
         for sample in samples1:
             string = ' '.join([str(s) for s in sample])
@@ -65,7 +66,7 @@ def generate_samples(model,batch_size,generated_num,output_file,x_info,x_ids,sta
         for sample in samples0:
             string = ' '.join([str(s) for s in sample])
             fout.write('%s\n' % string)
-            
+
     with open(output_file+'_e.txt', 'w', encoding="utf-8") as fout:
         for sample in samples1_e:
             fout.write('%s\n' % sample)
@@ -461,3 +462,4 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
                 print('_c_one: ', _c_one)
                 print('_h_short: ', _h_short)
                 print('c_fit: ', c_fit)
+
