@@ -1,0 +1,32 @@
+.metricTableLabel {
+    border-radius: 8px;
+    padding: 6px;
+    color: white;
+    width: 120px;
+    height: 29px;
+    line-height: 16px;
+}
+
+.metricTableButton {
+    background: none;
+    border: none;
+    text-decoration: underline;
+}
+
+.metricDistribution {
+    padding: 15px;
+    display: table;
+    min-width: 1000px;
+}
+
+.recomContainer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-width: 100%;
+}
+
+.recomContainer > img {
+    padding-inline: 5px;
+    max-height: 400px;
+    padding-bottom: 10px;
+}
