@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 import os, time, random, math, argparse
 import numpy as np
 from apted import APTED, Config
