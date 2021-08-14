@@ -6,12 +6,12 @@ from deepux2.deepux1_metrics.ux1.src.core.utils import read_image
 import pathlib
 
 
-def process_single_image():
+def process_single_image(image_name):
     # Move working dir if not in module directory
     if os.path.dirname(os.path.abspath(__file__)).lower() != os.path.abspath(os.getcwd()).lower():
         os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-    img = read_image(pathlib.Path('TestScreen.png'))
+    img = read_image(pathlib.Path(image_name))
     print("Processing image...")
     metrics, exec_times = metricscreator.MetricsCreator.getMetrics(img)
     evaluations = metricsevaluator.MetricsEvaluator.getEvaluations(metrics)

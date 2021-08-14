@@ -25,8 +25,8 @@ using_metrics_list = []  # Contains all choosen metrics
 evaluation_list = []  # Contains all evaluation-values
 
 
-def use_metrics():
-    start_string = str(process_single_image())
+def check_metrics(image_name):
+    start_string = str(process_single_image(image_name))
 
     singleToDoubleQuote = start_string.replace("'", "\"")
     json_object = json.loads(singleToDoubleQuote)
@@ -116,4 +116,3 @@ def __init__():
 
 if __name__ == '__main__':
     __init__()
-    use_metrics()

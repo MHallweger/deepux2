@@ -313,7 +313,7 @@ def about():
         "<p><b>Muhammet Burhan Topcu</b> <br>muhammet_burhan.topcu@smail.th-koeln.de</p>"
         "<p><b>Marvin Nicholas Hallweger</b> <br>marvin_nicholas.hallweger@smail.th-koeln.de</p>"
         "<p><h3><u>And supported by:</h3></u></p>"
-        "<p><b>Prof. Dr. Matthias Böhmer</b> <br>matthias.boehmer@th-koeln.de</p>",
+        "<p><b>Prof. Dr. Matthias Böhmer</b> <br>matthias.boehmer@th-koeln.de</p>"
         "<p><b>David Petersen</b> <br>david.petersen@th-koeln.de</p>",
     )
 

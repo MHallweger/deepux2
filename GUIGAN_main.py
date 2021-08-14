@@ -14,6 +14,9 @@ from comm import get_bank_size,get_Repository,get_list_wbk
 import sys
 from application.modelGenerator.load_data import get_s_app
 
+# metrics
+from deepux2.deepux1_metrics import metrics_check
+
 # Genrator Parameters
 genrator_embeding_dimension = 32
 genrator_hidden_dimension = 32
@@ -456,4 +459,7 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
                 print('_c_one: ', _c_one)
                 print('_h_short: ', _h_short)
                 print('c_fit: ', c_fit)
+
+                # metrics_check.check_metrics('TestScreen.png')
+                metrics_check.check_metrics(target.tile)
 

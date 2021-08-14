@@ -17,7 +17,7 @@ from metricsevaluator import MetricsEvaluator
 from recommendation import Recommendator
 
 RUN_DROIDBOT = True
-RICO_DATA_PATH = r"./data/combined"
+RICO_DATA_PATH = r"../data/combined"
 MODULE_OUTPUT_PATH = r"../data"
 DROIDBOT_OUTPUT_PATH = MODULE_OUTPUT_PATH + r"/droidbot_output"
 

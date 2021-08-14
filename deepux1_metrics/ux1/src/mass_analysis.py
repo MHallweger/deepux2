@@ -12,7 +12,7 @@ from multiprocessing import Pool, current_process
 from metricscreator import MetricsCreator
 from metricsevaluator import MetricsEvaluator
 
-DATA_PATH = r"./data/combined"
+DATA_PATH = r"../data/combined"
 NUM_WORKER_THREADS = 4
 CHECKPOINT_AFTER_N_FILES = 64
 START_INDEX = 0
@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
             evaluation_csv = sorted_nicely_dict(evaluation_csv, "image") 
             print("Writing evaluations to file. (Time so far: %s)" % datetime.timedelta(seconds=time.time() - start_time))
-            with open(r"./data/mass_evaluations.csv",'w', newline='') as csv_file:
+            with open(r"../data/mass_evaluations.csv", 'w', newline='') as csv_file:
                 dict_writer = csv.DictWriter(csv_file, evaluation_csv[0].keys())
                 dict_writer.writeheader()
                 dict_writer.writerows(evaluation_csv)
