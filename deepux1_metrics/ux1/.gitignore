@@ -1,5 +1,4 @@
 *.code-workspace
-data/
 .vscode/
 .idea/
 .ipynb_checkpoints/

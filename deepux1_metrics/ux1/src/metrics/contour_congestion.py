@@ -72,8 +72,8 @@ import numpy as np
 from PIL import Image
 
 # First-party modules
-from deepux2.deepux1_metrics.ux1.src.core.constants import GUI_TYPE_MOBILE
-from deepux2.deepux1_metrics.ux1.src.core.interfaces import AIMMetricInterface
+from deepux1_metrics.ux1.src.core.constants import GUI_TYPE_MOBILE
+from deepux1_metrics.ux1.src.core.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
 # Metadata

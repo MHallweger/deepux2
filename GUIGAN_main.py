@@ -15,7 +15,7 @@ import sys
 from application.modelGenerator.load_data import get_s_app
 
 # metrics
-from deepux2.deepux1_metrics import metrics_check
+from deepux1_metrics import metrics_check
 
 # Genrator Parameters
 genrator_embeding_dimension = 32
@@ -28,7 +28,7 @@ BATCH_SIZE = 32
 TOTAL_BATCH = 1
 
 bank_dict = {'1':2, '2':6, '3':10, '4':20, '5':35, '6':50, '7':70, '8':100, '9':200, '10':300}
-pre_built = True
+pre_built = False
 
 def generate_samples(model,batch_size,generated_num,output_file,x_info,x_ids,start_id_list,end_id_list,bank_dict,pre_st=0):
     ###Setup
@@ -437,29 +437,36 @@ def build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elem
                         if bank_ is True:
                             _b = '_wb'
 
+                        tempPath = ""
                         if i < len(lines1):
                             if _resize:
                                 if lines1[i].strip() == '-1':
                                     target_dImg.save(
                                         _path + str(i) + '_' + str(imghigh) + _b + '_long_no_end_' + s_name + '.jpg',
                                         quality=100)
+                                    tempName = _path + str(i) + '_' + str(imghigh) + _b + '_long_no_end_' + s_name + '.jpg'
                                 else:
                                     target_dImg.save(
                                         _path + str(i) + '_' + str(imghigh) + _b + s_name + '_end_' + lines1[
                                             i].strip() + '.jpg', quality=100)
+
+                                    tempName = _path + str(i) + '_' + str(imghigh) + _b + s_name + '_end_' + lines1[
+                                            i].strip() + '.jpg'
                             else:
                                 if lines1[i].strip() == '-1':
                                     target.save(
                                         _path + str(i) + '_' + str(imghigh) + _b + '_long_no_end_' + s_name + '.jpg',
                                         quality=100)
+                                    tempName = _path + str(i) + '_' + str(imghigh) + _b + '_long_no_end_' + s_name + '.jpg'
                                 else:
                                     target.save(_path + str(i) + '_' + str(imghigh) + _b + s_name + '_end_' + lines1[i].strip() + '.jpg', quality=100)
+                                    tempName = _path + str(i) + '_' + str(imghigh) + _b + s_name + '_end_' + lines1[i].strip() + '.jpg'
+
+                            # metrics_check.check_metrics('TestScreen.png')
+                            print(str(tempName))
+                            ##metrics_check.check_metrics("..\\..\\..\\" + tempName)
 
                 print('\n_total_num: ', total_num)
                 print('_c_one: ', _c_one)
                 print('_h_short: ', _h_short)
                 print('c_fit: ', c_fit)
-
-                # metrics_check.check_metrics('TestScreen.png')
-                metrics_check.check_metrics(target.tile)
-

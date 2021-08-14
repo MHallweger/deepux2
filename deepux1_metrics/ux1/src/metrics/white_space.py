@@ -45,7 +45,7 @@
 import base64
 from io import BytesIO
 from PIL import Image
-import deepux2.deepux1_metrics.ux1.src.segmentation as segmentation
+import deepux1_metrics.ux1.src.segmentation as segmentation
 
 def execute(b64):
     elements = segmentation.get_elements(b64)['elements']

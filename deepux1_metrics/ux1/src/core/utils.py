@@ -19,7 +19,7 @@ from io import BytesIO
 from PIL import Image
 
 # First-party modules
-from deepux2.deepux1_metrics.ux1.src.core.constants import IMAGE_QUALITY_JPEG
+from deepux1_metrics.ux1.src.core.constants import IMAGE_QUALITY_JPEG
 
 # ----------------------------------------------------------------------------
 # Metadata

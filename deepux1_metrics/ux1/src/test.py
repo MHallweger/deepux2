@@ -1,8 +1,8 @@
 import os
-from deepux2.deepux1_metrics.ux1.src import metricscreator
-from deepux2.deepux1_metrics.ux1.src import metricsevaluator
-from deepux2.deepux1_metrics.ux1.src import recommendation
-from deepux2.deepux1_metrics.ux1.src.core.utils import read_image
+from deepux1_metrics.ux1.src import metricscreator
+from deepux1_metrics.ux1.src import metricsevaluator
+from deepux1_metrics.ux1.src import recommendation
+from deepux1_metrics.ux1.src.core.utils import read_image
 import pathlib
 
 

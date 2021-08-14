@@ -1,5 +1,5 @@
 import json
-from deepux2.deepux1_metrics.ux1.src.test import process_single_image
+from deepux1_metrics.ux1.src.test import process_single_image
 
 # Bools for UI
 distinct_rgb_values = True
@@ -26,6 +26,7 @@ evaluation_list = []  # Contains all evaluation-values
 
 
 def check_metrics(image_name):
+    __init__()
     start_string = str(process_single_image(image_name))
 
     singleToDoubleQuote = start_string.replace("'", "\"")

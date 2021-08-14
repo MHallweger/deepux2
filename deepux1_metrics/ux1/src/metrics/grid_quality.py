@@ -43,7 +43,7 @@
 ###############
 #
 import numpy
-import deepux2.deepux1_metrics.ux1.src.segmentation as segmentation
+import deepux1_metrics.ux1.src.segmentation as segmentation
 
 
 def execute(b64):

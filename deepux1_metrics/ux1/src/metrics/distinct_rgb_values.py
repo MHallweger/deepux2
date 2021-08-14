@@ -60,14 +60,14 @@ from typing import Any, List, Optional, Tuple
 from PIL import Image
 
 # First-party modules
-from deepux2.deepux1_metrics.ux1.src.core.constants import (
+from deepux1_metrics.ux1.src.core.constants import (
     COLOR_REDUCTION_THRESHOLD_DESKTOP,
     COLOR_REDUCTION_THRESHOLD_MOBILE,
     GUI_TYPE_DESKTOP,
     GUI_TYPE_MOBILE,
 )
 
-from deepux2.deepux1_metrics.ux1.src.core.interfaces import AIMMetricInterface
+from deepux1_metrics.ux1.src.core.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
 # Metadata

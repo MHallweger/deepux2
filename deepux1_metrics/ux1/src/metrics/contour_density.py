@@ -63,14 +63,14 @@ import numpy as np
 from PIL import Image
 
 # First-party modules
-from deepux2.deepux1_metrics.ux1.src.core.constants import (
+from deepux1_metrics.ux1.src.core.constants import (
     CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD,
     GAUSSIAN_KERNEL_SIZE,
     GAUSSIAN_KERNEL_STANDARD_DEVIATION,
     GUI_TYPE_DESKTOP,
     GUI_TYPE_MOBILE,
 )
-from deepux2.deepux1_metrics.ux1.src.core.interfaces import AIMMetricInterface
+from deepux1_metrics.ux1.src.core.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
 # Metadata

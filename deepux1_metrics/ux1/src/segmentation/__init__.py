@@ -5,7 +5,7 @@ from skimage import img_as_ubyte
 from skimage.filters import rank
 from skimage.morphology import  disk
 from skimage.feature import canny
-import deepux2.deepux1_metrics.ux1.src.segmentation.utils as utils
+import deepux1_metrics.ux1.src.segmentation.utils as utils
 
 def get_elements(b64, detailed=True, preview=True):
     img_bgr = utils.read_b64_img(b64)

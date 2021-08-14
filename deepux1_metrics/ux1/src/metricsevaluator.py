@@ -1,19 +1,19 @@
-import deepux2.deepux1_metrics.ux1.src.metrics.distinct_rgb_values as metric_distinct_rgb_values
-import deepux2.deepux1_metrics.ux1.src.metrics.figure_ground_contrast as metric_figure_ground_contrast
-import deepux2.deepux1_metrics.ux1.src.metrics.grid_quality as metric_grid_quality
-import deepux2.deepux1_metrics.ux1.src.metrics.white_space as metric_white_space
-import deepux2.deepux1_metrics.ux1.src.metrics.colourfulness as metric_colourfulness
-import deepux2.deepux1_metrics.ux1.src.metrics.HSV_avg as metric_hsv_avg
-import deepux2.deepux1_metrics.ux1.src.metrics.HSV_unique as metric_hsv_unique
-import deepux2.deepux1_metrics.ux1.src.metrics.LAB_avg as metrics_lab_avg
-import deepux2.deepux1_metrics.ux1.src.metrics.static_colour_clustering as metrics_static_colour_clustering
-import deepux2.deepux1_metrics.ux1.src.metrics.dynamic_colour_clustering as metrics_dynamic_colour_clustering
-import deepux2.deepux1_metrics.ux1.src.metrics.luminance_sd as metrics_luminance_sd
-import deepux2.deepux1_metrics.ux1.src.metrics.wave as metrics_wave
-import deepux2.deepux1_metrics.ux1.src.metrics.contour_density as metrics_contour_density
-import deepux2.deepux1_metrics.ux1.src.metrics.contour_congestion as metrics_contour_congestion
-import deepux2.deepux1_metrics.ux1.src.metrics.pixel_symmetry as metrics_pixel_symmetry
-import deepux2.deepux1_metrics.ux1.src.metrics.quadtree_decomposition as metrics_quadtree_decomposition
+import deepux1_metrics.ux1.src.metrics.distinct_rgb_values as metric_distinct_rgb_values
+import deepux1_metrics.ux1.src.metrics.figure_ground_contrast as metric_figure_ground_contrast
+import deepux1_metrics.ux1.src.metrics.grid_quality as metric_grid_quality
+import deepux1_metrics.ux1.src.metrics.white_space as metric_white_space
+import deepux1_metrics.ux1.src.metrics.colourfulness as metric_colourfulness
+import deepux1_metrics.ux1.src.metrics.HSV_avg as metric_hsv_avg
+import deepux1_metrics.ux1.src.metrics.HSV_unique as metric_hsv_unique
+import deepux1_metrics.ux1.src.metrics.LAB_avg as metrics_lab_avg
+import deepux1_metrics.ux1.src.metrics.static_colour_clustering as metrics_static_colour_clustering
+import deepux1_metrics.ux1.src.metrics.dynamic_colour_clustering as metrics_dynamic_colour_clustering
+import deepux1_metrics.ux1.src.metrics.luminance_sd as metrics_luminance_sd
+import deepux1_metrics.ux1.src.metrics.wave as metrics_wave
+import deepux1_metrics.ux1.src.metrics.contour_density as metrics_contour_density
+import deepux1_metrics.ux1.src.metrics.contour_congestion as metrics_contour_congestion
+import deepux1_metrics.ux1.src.metrics.pixel_symmetry as metrics_pixel_symmetry
+import deepux1_metrics.ux1.src.metrics.quadtree_decomposition as metrics_quadtree_decomposition
 
 
 class MetricsEvaluator:

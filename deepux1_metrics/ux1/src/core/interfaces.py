@@ -15,7 +15,7 @@ import abc
 from typing import Any, List, Optional
 
 # First-party modules
-from deepux2.deepux1_metrics.ux1.src.core.constants import GUI_TYPE_DESKTOP
+from deepux1_metrics.ux1.src.core.constants import GUI_TYPE_DESKTOP
 
 # ----------------------------------------------------------------------------
 # Metadata
