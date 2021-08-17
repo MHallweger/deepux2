@@ -15,6 +15,8 @@ from PySide2.QtCore import QRect, QSize, QCoreApplication, QMetaObject
 from PySide2.QtGui import QIcon, QFont, Qt, QPixmap, QMovie
 from PySide2.QtWidgets import QLabel, QPushButton, QWidget, QFrame, QStatusBar, QSizePolicy, QAction, QProgressBar, \
     QMenuBar, QMenu, QMessageBox, QHBoxLayout
+from PyQt5.QtWidgets import QCheckBox
+
 
 from GUIGAN_main import build_result_uis
 import build_generator
@@ -30,8 +32,8 @@ import fire
 
 from xml.dom import minidom
 
-json_rico = r'.\folders\Rico\jsons'  # Rico Json Dateien
-gui_dir_rico = r'.\folders\Rico\gui'  # Rico
+json_rico = r'.\folders\Rico\jsons'
+gui_dir_rico = r'.\folders\Rico\gui'
 gui_information_dir = r'.\folders\gui_informations'
 control_elements_id_dir = r'.\folders\gui_control_elements'
 cutted_ui_elements = r'.\folders\cutted_ui_elements'
@@ -51,7 +53,7 @@ class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         if not mainWindow.objectName():
             mainWindow.setObjectName(u"mainWindow")
-        mainWindow.setFixedSize(1143, 760)
+        mainWindow.setFixedSize(1143, 710)
         mainWindow.setMouseTracking(False)
         mainWindow.setWindowIcon(QIcon(u"resources/images/bulb.png"))
 
@@ -296,9 +298,9 @@ class Ui_mainWindow(object):
         self.pushButton_5.setText(QCoreApplication.translate("mainWindow", u"Generate Generators", None))
         self.pushButton_6.setText(QCoreApplication.translate("mainWindow", u"Generate UI Suggestions", None))
         self.pushButton_7.setText(QCoreApplication.translate("mainWindow", u"Use own Data-Set", None))
-        self.pushButton_8.setText(QCoreApplication.translate("mainWindow", u"calc_with_metrics", None))
+        self.pushButton_8.setText(QCoreApplication.translate("mainWindow", u"Calculate Metrics", None))
         self.pushButton_9.setText(QCoreApplication.translate("mainWindow", u"*.li Parser", None))
-        self.pushButton_10.setText(QCoreApplication.translate("mainWindow", u"cancle_calc_with_metrics", None))
+        self.pushButton_10.setText(QCoreApplication.translate("mainWindow", u"Cancle Metric-Calculation", None))
 
         self.pushButton_1.setStatusTip("Cut the existing Screenshots into a specified substructure")
         self.pushButton_2.setStatusTip("Prepare the cutted user interface elements for the neural network")
@@ -307,7 +309,10 @@ class Ui_mainWindow(object):
         self.pushButton_5.setStatusTip("Generate GAN-Generator")
         self.pushButton_6.setStatusTip("Create new inspiring user interfaces with the help of the generator")
         self.pushButton_7.setStatusTip("Open a folder where you can insert your own Screenshots. These will be used for future calculations")
-        self.pushButton_8.setStatusTip("Start a recalculation with the new Screenshots")
+        self.pushButton_8.setStatusTip("The generated images are checked with various metrics")
+        self.pushButton_9.setStatusTip("Select a .li file and parse it into a .json file")
+        self.pushButton_10.setStatusTip("Cancle Metric-Calculation")
+
 
 
 # Create a "about" Message-Box
@@ -430,7 +435,7 @@ def threaded_function(arg):
             first_start_check_metrics = False
 
 
-            if (evaluation_percentage > 64):
+            if (evaluation_percentage > 54):
                 print("add to ui")
                 if (positionOnLayout == 0):
                     uiObj.label_1.setPixmap(QPixmap(str(pathtest)))
