@@ -213,13 +213,86 @@ class Ui_mainWindow(object):
         self.pushButton_10.setIconSize(QSize(25, 25))
         self.pushButton_10.raise_()
 
+        # Checkbox
+        self.cb1 = QCheckBox("distinct_rgb_values", self.centralwidget)
+        self.cb1.setGeometry(QRect(875, 517, 151, 51))
+        self.cb1.setIconSize(QSize(25, 25))
+        self.cb1.raise_()
 
+        self.cb2 = QCheckBox("figure_ground_contrast", self.centralwidget)
+        self.cb2.setGeometry(QRect(1000, 517, 151, 51))
+        self.cb2.setIconSize(QSize(25, 25))
+        self.cb2.raise_()
 
-        self.b1 = QCheckBox(self.centralwidget)
-        self.b1.setObjectName(u"pushButton_2")
-        self.b1.setGeometry(QRect(750, 590, 151, 51))
-        self.b1.setIconSize(QSize(25, 25))
-        self.b1.raise_()
+        self.cb3 = QCheckBox("white_space", self.centralwidget)
+        self.cb3.setGeometry(QRect(875, 535, 151, 51))
+        self.cb3.setIconSize(QSize(25, 25))
+        self.cb3.raise_()
+
+        self.cb4 = QCheckBox("grid_quality", self.centralwidget)
+        self.cb4.setGeometry(QRect(1000, 535, 151, 51))
+        self.cb4.setIconSize(QSize(25, 25))
+        self.cb4.raise_()
+
+        self.cb5 = QCheckBox("colourfulness", self.centralwidget)
+        self.cb5.setGeometry(QRect(875, 553, 151, 51))
+        self.cb5.setIconSize(QSize(25, 25))
+        self.cb5.raise_()
+
+        self.cb6 = QCheckBox("hsv_colours", self.centralwidget)
+        self.cb6.setGeometry(QRect(1000, 553, 151, 51))
+        self.cb6.setIconSize(QSize(25, 25))
+        self.cb6.raise_()
+
+        # self.cb7 = QCheckBox("hsv_unique", self.centralwidget)
+        # self.cb7.setGeometry(QRect(875, 517, 151, 51))
+        # self.cb7.setIconSize(QSize(25, 25))
+        # self.cb7.raise_()
+        #
+        # self.cb8 = QCheckBox("lab_avg", self.centralwidget)
+        # self.cb8.setGeometry(QRect(875, 517, 151, 51))
+        # self.cb8.setIconSize(QSize(25, 25))
+        # self.cb8.raise_()
+        #
+        # self.cb9 = QCheckBox("static_colour_clusters", self.centralwidget)
+        # self.cb9.setGeometry(QRect(875, 517, 151, 51))
+        # self.cb9.setIconSize(QSize(25, 25))
+        # self.cb9.raise_()
+        #
+        # self.cb10 = QCheckBox("dynamic_colour_clusters", self.centralwidget)
+        # self.cb10.setGeometry(QRect(875, 517, 151, 51))
+        # self.cb10.setIconSize(QSize(25, 25))
+        # self.cb10.raise_()
+        #
+        # self.cb11 = QCheckBox("luminance_sd", self.centralwidget)
+        # self.cb11.setGeometry(QRect(875, 517, 151, 51))
+        # self.cb11.setIconSize(QSize(25, 25))
+        # self.cb11.raise_()
+        #
+        # self.cb12 = QCheckBox("wave", self.centralwidget)
+        # self.cb12.setGeometry(QRect(875, 517, 151, 51))
+        # self.cb12.setIconSize(QSize(25, 25))
+        # self.cb12.raise_()
+        #
+        # self.cb13 = QCheckBox("contour_density", self.centralwidget)
+        # self.cb13.setGeometry(QRect(875, 517, 151, 51))
+        # self.cb13.setIconSize(QSize(25, 25))
+        # self.cb13.raise_()
+        #
+        # self.cb14 = QCheckBox("contour_congestion", self.centralwidget)
+        # self.cb14.setGeometry(QRect(875, 517, 151, 51))
+        # self.cb14.setIconSize(QSize(25, 25))
+        # self.cb14.raise_()
+        #
+        # self.cb15 = QCheckBox("pixel_symmetry", self.centralwidget)
+        # self.cb15.setGeometry(QRect(875, 517, 151, 51))
+        # self.cb15.setIconSize(QSize(25, 25))
+        # self.cb15.raise_()
+        #
+        # self.cb16 = QCheckBox("quadtree_decomposition", self.centralwidget)
+        # self.cb16.setGeometry(QRect(875, 517, 151, 51))
+        # self.cb16.setIconSize(QSize(25, 25))
+        # self.cb16.raise_()
 
 
         self.pushButton_1.clicked.connect(save_subtree)  # Cut UI's
