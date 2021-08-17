@@ -14,7 +14,7 @@ from PySide2 import QtWidgets, QtGui
 from PySide2.QtCore import QRect, QSize, QCoreApplication, QMetaObject
 from PySide2.QtGui import QIcon, QFont, Qt, QPixmap, QMovie
 from PySide2.QtWidgets import QLabel, QPushButton, QWidget, QFrame, QStatusBar, QSizePolicy, QAction, QProgressBar, \
-    QMenuBar, QMenu, QMessageBox, QHBoxLayout
+    QMenuBar, QMenu, QMessageBox, QHBoxLayout, QCheckBox
 
 from GUIGAN_main import build_result_uis
 import build_generator
@@ -212,6 +212,14 @@ class Ui_mainWindow(object):
         self.pushButton_10.setGeometry(QRect(700, 610, 151, 51))
         self.pushButton_10.setIconSize(QSize(25, 25))
         self.pushButton_10.raise_()
+
+
+
+        self.b1 = QCheckBox(self.centralwidget)
+        self.b1.setObjectName(u"pushButton_2")
+        self.b1.setGeometry(QRect(750, 590, 151, 51))
+        self.b1.setIconSize(QSize(25, 25))
+        self.b1.raise_()
 
 
         self.pushButton_1.clicked.connect(save_subtree)  # Cut UI's
