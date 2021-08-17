@@ -19,7 +19,7 @@ contour_congestion = True
 pixel_symmetry = True
 quadtree_decomposition = True
 
-choosen_percentage = 50  # Accuracy
+choosen_percentage = 54  # Accuracy
 
 using_metrics_list = []  # Contains all choosen metrics
 evaluation_list = []  # Contains all evaluation-values
