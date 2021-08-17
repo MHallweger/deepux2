@@ -25,8 +25,11 @@ using_metrics_list = []  # Contains all choosen metrics
 evaluation_list = []  # Contains all evaluation-values
 
 
-def check_metrics(image_name):
-    __init__()
+def check_metrics(image_name, firstStart):
+
+    if(firstStart):
+        __init__()
+
     start_string = str(process_single_image(image_name))
 
     singleToDoubleQuote = start_string.replace("'", "\"")
@@ -71,11 +74,17 @@ def check_metrics(image_name):
         print("Best möglicher zu erreichender Wert: " + str(best_possible_evaluation_amount))
         print("Erreichter Wert: " + str(evaluation_amount))
         print("Ergebnis: Dieses Bild ist gut!" + str(" (") + str("{:.2f}".format(evaluation_percentage)) + str("%)"))
+        evaluation_amount = 0  # Real evaluation Amount
+        best_possible_evaluation_amount = 0  # Use case: All evaluation values are "Good"
+        return evaluation_percentage
     else:
         print("Ausgewählter Prozentsatz: " + str(choosen_percentage))
         print("Best möglicher zu erreichender Wert: " + str(best_possible_evaluation_amount))
         print("Erreichter Wert: " + str(evaluation_amount))
         print("Ergebnis: Dieses Bild ist schlecht!" + str(" (") + str("{:.2f}".format(evaluation_percentage)) + str("%)"))
+        evaluation_amount = 0  # Real evaluation Amount
+        best_possible_evaluation_amount = 0  # Use case: All evaluation values are "Good"
+        return evaluation_percentage
 
 
 def __init__():

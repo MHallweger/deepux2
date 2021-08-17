@@ -155,7 +155,8 @@ class Recommendator:
 
                 if "quadtree_decomposition" not in replacedKeyStringForMetricsEvaluation \
                         and "hsv_colours" not in replacedKeyStringForMetricsEvaluation\
-                        and "lav_avg" not in replacedKeyStringForMetricsEvaluation:
+                        and "lav_avg" not in replacedKeyStringForMetricsEvaluation\
+                        and "lab_avg_stdLEvaluation" not in replacedKeyStringForMetricsEvaluation:
                     metricsEvaluation[replacedKeyStringForMetricsEvaluation].update(recommendations=commaSeperatedImageValuesAsString)
                 else:
                     splittedKeyValue = replacedKeyStringForMetricsEvaluation.split('_')

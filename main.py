@@ -3,14 +3,18 @@ import sys
 import tkinter
 from tkinter import filedialog
 from turtle import fd
+import cv2
+import glob
+from PIL import Image
+from pathlib import Path
+from threading import Thread
+from time import sleep
 
-
-
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtGui
 from PySide2.QtCore import QRect, QSize, QCoreApplication, QMetaObject
-from PySide2.QtGui import QIcon, QFont, Qt, QPixmap
+from PySide2.QtGui import QIcon, QFont, Qt, QPixmap, QMovie
 from PySide2.QtWidgets import QLabel, QPushButton, QWidget, QFrame, QStatusBar, QSizePolicy, QAction, QProgressBar, \
-    QMenuBar, QMenu, QMessageBox
+    QMenuBar, QMenu, QMessageBox, QHBoxLayout
 
 from GUIGAN_main import build_result_uis
 import build_generator
@@ -40,6 +44,7 @@ models_dir = r'.\folders\models'
 results_dir = r'.\folders\results'
 results_pre_dir = r'.\folders\results_pre'
 li_files = r'.\folders\li_files'
+
 
 # UI
 class Ui_mainWindow(object):
@@ -189,6 +194,7 @@ class Ui_mainWindow(object):
         self.pushButton_7.setToolTipDuration(3)
         self.pushButton_7.setIconSize(QSize(25, 25))
         self.pushButton_7.raise_()
+
         self.pushButton_8 = QPushButton(self.centralwidget)
         self.pushButton_8.setObjectName(u"pushButton_8")
         self.pushButton_8.setGeometry(QRect(532, 610, 151, 51))
@@ -201,6 +207,13 @@ class Ui_mainWindow(object):
         self.pushButton_9.setIconSize(QSize(25, 25))
         self.pushButton_9.raise_()
 
+        self.pushButton_10 = QPushButton(self.centralwidget)
+        self.pushButton_10.setObjectName(u"pushButton_10")
+        self.pushButton_10.setGeometry(QRect(700, 610, 151, 51))
+        self.pushButton_10.setIconSize(QSize(25, 25))
+        self.pushButton_10.raise_()
+
+
         self.pushButton_1.clicked.connect(save_subtree)  # Cut UI's
         self.pushButton_2.clicked.connect(load_data_for_model)  # Load UI Data
         self.pushButton_3.clicked.connect(generateModel)  # Generate Model
@@ -208,8 +221,9 @@ class Ui_mainWindow(object):
         self.pushButton_5.clicked.connect(generate_generators)  # Generate Generators
         self.pushButton_6.clicked.connect(generate_uis)  # Generate UI Suggestions
         self.pushButton_7.clicked.connect(use_own_data_set)  # Use own Data Set
-        self.pushButton_8.clicked.connect(start_recalculation)  # Start recalculation
+        self.pushButton_8.clicked.connect(calc_with_metrics)  # Start recalculation
         self.pushButton_9.clicked.connect(open_parser_window)  # Start open_parser_window
+        self.pushButton_10.clicked.connect(cancle_calc_with_metrics)  # Start calc_with_metrics
 
         # Actions
         self.action_ueber = QAction(mainWindow)
@@ -231,12 +245,7 @@ class Ui_mainWindow(object):
         self.line_3.setFrameShadow(QFrame.Sunken)
         self.line_3.raise_()
 
-        # ProgressBar
-        self.progressBar = QProgressBar(self.centralwidget)
-        self.progressBar.setObjectName(u"progressBar")
-        self.progressBar.setGeometry(QRect(20, 690, 485, 23))
-        self.progressBar.setValue(50)
-        self.progressBar.raise_()
+
 
         # MenuBar
         self.menubar = QMenuBar(mainWindow)
@@ -287,9 +296,9 @@ class Ui_mainWindow(object):
         self.pushButton_5.setText(QCoreApplication.translate("mainWindow", u"Generate Generators", None))
         self.pushButton_6.setText(QCoreApplication.translate("mainWindow", u"Generate UI Suggestions", None))
         self.pushButton_7.setText(QCoreApplication.translate("mainWindow", u"Use own Data-Set", None))
-        self.pushButton_8.setText(QCoreApplication.translate("mainWindow", u"Start recalculation", None))
+        self.pushButton_8.setText(QCoreApplication.translate("mainWindow", u"calc_with_metrics", None))
         self.pushButton_9.setText(QCoreApplication.translate("mainWindow", u"*.li Parser", None))
-
+        self.pushButton_10.setText(QCoreApplication.translate("mainWindow", u"cancle_calc_with_metrics", None))
 
         self.pushButton_1.setStatusTip("Cut the existing Screenshots into a specified substructure")
         self.pushButton_2.setStatusTip("Prepare the cutted user interface elements for the neural network")
@@ -380,6 +389,70 @@ def open_parser_window():
     parse_li_to_json(file_path)
     print(file_path)
 
+def load_images_from_folder(folder):
+    images = []
+    for filename in os.listdir(folder):
+        img = cv2.imread(os.path.join(folder,filename))
+        if img is not None:
+            images.append(img)
+    return images
+
+uiObj = ""
+MainWindowObj = ""
+thread = ""
+def threaded_function(arg):
+    positionOnLayout = 0
+    first_start_check_metrics = True
+    for i in range(arg):
+        print("calc_with_metrics")
+        root_dir = r".\folders\results"
+
+        results = list(Path(root_dir).rglob("**/*.jpg"))
+        for result in results:
+
+            if(positionOnLayout > 3):
+                positionOnLayout = 0
+
+            print(result)
+            from deepux1_metrics import metrics_check
+            pathtest = "..\\..\\..\\" + str(result)
+
+            if (positionOnLayout == 0):
+                uiObj.label_1.setText("LOADING")
+            elif (positionOnLayout == 1):
+                uiObj.label_2.setText("LOADING")
+            elif (positionOnLayout == 2):
+                uiObj.label_3.setText("LOADING")
+            elif (positionOnLayout == 3):
+                uiObj.label_4.setText("LOADING")
+
+            evaluation_percentage = metrics_check.check_metrics(pathtest,first_start_check_metrics)
+            first_start_check_metrics = False
+
+
+            if (evaluation_percentage > 64):
+                print("add to ui")
+                if (positionOnLayout == 0):
+                    uiObj.label_1.setPixmap(QPixmap(str(pathtest)))
+                elif (positionOnLayout == 1):
+                    uiObj.label_2.setPixmap(QPixmap(str(pathtest)))
+                elif (positionOnLayout == 2):
+                    uiObj.label_3.setPixmap(QPixmap(str(pathtest)))
+                elif (positionOnLayout == 3):
+                    uiObj.label_4.setPixmap(QPixmap(str(pathtest)))
+
+                print("positionOnLayout1" + str(positionOnLayout))
+                positionOnLayout = positionOnLayout + 1
+                print("positionOnLayout2" + str(positionOnLayout))
+
+def calc_with_metrics():
+
+    thread = Thread(target=threaded_function, args=(10,))
+    thread.start()
+
+def cancle_calc_with_metrics():
+    ## TODO Interrupt thread
+    print("TODO Interrupt thread")
 
 if __name__ == '__main__':
     # Console-call
@@ -429,5 +502,7 @@ if __name__ == '__main__':
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_mainWindow()
     ui.setupUi(MainWindow)
+    MainWindowObj = MainWindow
     MainWindow.show()
+    uiObj = ui
     sys.exit(app.exec_())
