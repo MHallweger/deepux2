@@ -8,16 +8,16 @@ import glob
 from PIL import Image
 from pathlib import Path
 from threading import Thread
-from time import sleep
 
 from PySide2 import QtWidgets, QtGui
 from PySide2.QtCore import QRect, QSize, QCoreApplication, QMetaObject
 from PySide2.QtGui import QIcon, QFont, Qt, QPixmap, QMovie
 from PySide2.QtWidgets import QLabel, QPushButton, QWidget, QFrame, QStatusBar, QSizePolicy, QAction, QProgressBar, \
-    QMenuBar, QMenu, QMessageBox, QHBoxLayout, QCheckBox
+    QMenuBar, QMenu, QMessageBox, QHBoxLayout, QCheckBox, QLineEdit
 
 from GUIGAN_main import build_result_uis
 import build_generator
+from deepux1_metrics import metrics_check
 from application.parser.main import parse_li_to_json
 from get_style_emb import get_style_embeddings
 from application.modelGenerator.load_data import load_data
@@ -213,98 +213,126 @@ class Ui_mainWindow(object):
         self.pushButton_10.setIconSize(QSize(25, 25))
         self.pushButton_10.raise_()
 
+        self.pushButton_11 = QPushButton(self.centralwidget)
+        self.pushButton_11.setObjectName(u"pushButton_11")
+        self.pushButton_11.setGeometry(980, 490, 75, 25)
+        self.pushButton_11.raise_()
+
+        # Input-fields
+        self.if1 = QLineEdit(self.centralwidget)
+        self.if1.setMaxLength(3)
+        self.if1.setPlaceholderText("Accuracy (metrics)")
+        self.if1.setGeometry(875, 490, 100, 25)
+
         # Checkbox
         self.cb1 = QCheckBox("distinct_rgb_values", self.centralwidget)
-        self.cb1.setGeometry(QRect(875, 517, 151, 51))
-        self.cb1.setIconSize(QSize(25, 25))
+        self.cb1.setGeometry(QRect(875, 517, 151, 25))
+        self.cb1.stateChanged.connect(lambda:checkbox_check(self.cb1))
+        self.cb1.setChecked(True)
         self.cb1.raise_()
 
         self.cb2 = QCheckBox("figure_ground_contrast", self.centralwidget)
-        self.cb2.setGeometry(QRect(1000, 517, 151, 51))
-        self.cb2.setIconSize(QSize(25, 25))
+        self.cb2.setGeometry(QRect(1000, 517, 151, 25))
+        self.cb2.stateChanged.connect(lambda:checkbox_check(self.cb2))
+        self.cb2.setChecked(True)
         self.cb2.raise_()
 
         self.cb3 = QCheckBox("white_space", self.centralwidget)
-        self.cb3.setGeometry(QRect(875, 535, 151, 51))
-        self.cb3.setIconSize(QSize(25, 25))
+        self.cb3.setGeometry(QRect(875, 535, 151, 25))
+        self.cb3.stateChanged.connect(lambda:checkbox_check(self.cb3))
+        self.cb3.setChecked(True)
         self.cb3.raise_()
 
         self.cb4 = QCheckBox("grid_quality", self.centralwidget)
-        self.cb4.setGeometry(QRect(1000, 535, 151, 51))
-        self.cb4.setIconSize(QSize(25, 25))
+        self.cb4.setGeometry(QRect(1000, 535, 151, 25))
+        self.cb4.stateChanged.connect(lambda:checkbox_check(self.cb4))
+        self.cb4.setChecked(True)
         self.cb4.raise_()
 
         self.cb5 = QCheckBox("colourfulness", self.centralwidget)
-        self.cb5.setGeometry(QRect(875, 553, 151, 51))
-        self.cb5.setIconSize(QSize(25, 25))
+        self.cb5.setGeometry(QRect(875, 553, 151, 25))
+        self.cb5.stateChanged.connect(lambda:checkbox_check(self.cb5))
+        self.cb5.setChecked(True)
         self.cb5.raise_()
 
         self.cb6 = QCheckBox("hsv_colours", self.centralwidget)
-        self.cb6.setGeometry(QRect(1000, 553, 151, 51))
-        self.cb6.setIconSize(QSize(25, 25))
+        self.cb6.setGeometry(QRect(1000, 553, 151, 25))
+        self.cb6.stateChanged.connect(lambda:checkbox_check(self.cb6))
+        self.cb6.setChecked(True)
         self.cb6.raise_()
 
-        # self.cb7 = QCheckBox("hsv_unique", self.centralwidget)
-        # self.cb7.setGeometry(QRect(875, 517, 151, 51))
-        # self.cb7.setIconSize(QSize(25, 25))
-        # self.cb7.raise_()
-        #
-        # self.cb8 = QCheckBox("lab_avg", self.centralwidget)
-        # self.cb8.setGeometry(QRect(875, 517, 151, 51))
-        # self.cb8.setIconSize(QSize(25, 25))
-        # self.cb8.raise_()
-        #
-        # self.cb9 = QCheckBox("static_colour_clusters", self.centralwidget)
-        # self.cb9.setGeometry(QRect(875, 517, 151, 51))
-        # self.cb9.setIconSize(QSize(25, 25))
-        # self.cb9.raise_()
-        #
-        # self.cb10 = QCheckBox("dynamic_colour_clusters", self.centralwidget)
-        # self.cb10.setGeometry(QRect(875, 517, 151, 51))
-        # self.cb10.setIconSize(QSize(25, 25))
-        # self.cb10.raise_()
-        #
-        # self.cb11 = QCheckBox("luminance_sd", self.centralwidget)
-        # self.cb11.setGeometry(QRect(875, 517, 151, 51))
-        # self.cb11.setIconSize(QSize(25, 25))
-        # self.cb11.raise_()
-        #
-        # self.cb12 = QCheckBox("wave", self.centralwidget)
-        # self.cb12.setGeometry(QRect(875, 517, 151, 51))
-        # self.cb12.setIconSize(QSize(25, 25))
-        # self.cb12.raise_()
-        #
-        # self.cb13 = QCheckBox("contour_density", self.centralwidget)
-        # self.cb13.setGeometry(QRect(875, 517, 151, 51))
-        # self.cb13.setIconSize(QSize(25, 25))
-        # self.cb13.raise_()
-        #
-        # self.cb14 = QCheckBox("contour_congestion", self.centralwidget)
-        # self.cb14.setGeometry(QRect(875, 517, 151, 51))
-        # self.cb14.setIconSize(QSize(25, 25))
-        # self.cb14.raise_()
-        #
-        # self.cb15 = QCheckBox("pixel_symmetry", self.centralwidget)
-        # self.cb15.setGeometry(QRect(875, 517, 151, 51))
-        # self.cb15.setIconSize(QSize(25, 25))
-        # self.cb15.raise_()
-        #
-        # self.cb16 = QCheckBox("quadtree_decomposition", self.centralwidget)
-        # self.cb16.setGeometry(QRect(875, 517, 151, 51))
-        # self.cb16.setIconSize(QSize(25, 25))
-        # self.cb16.raise_()
+        self.cb7 = QCheckBox("hsv_unique", self.centralwidget)
+        self.cb7.setGeometry(QRect(875, 571, 151, 25))
+        self.cb7.stateChanged.connect(lambda:checkbox_check(self.cb7))
+        self.cb7.setChecked(True)
+        self.cb7.raise_()
 
+        self.cb8 = QCheckBox("lab_avg", self.centralwidget)
+        self.cb8.setGeometry(QRect(1000, 571, 151, 25))
+        self.cb8.stateChanged.connect(lambda:checkbox_check(self.cb8))
+        self.cb8.setChecked(True)
+        self.cb8.raise_()
 
+        self.cb9 = QCheckBox("static_colour_clusters", self.centralwidget)
+        self.cb9.setGeometry(QRect(875, 589, 151, 25))
+        self.cb9.stateChanged.connect(lambda:checkbox_check(self.cb9))
+        self.cb9.setChecked(True)
+        self.cb9.raise_()
+
+        self.cb10 = QCheckBox("dynamic_colour_clusters", self.centralwidget)
+        self.cb10.setGeometry(QRect(1000, 589, 151, 25))
+        self.cb10.stateChanged.connect(lambda:checkbox_check(self.cb10))
+        self.cb10.setChecked(True)
+        self.cb10.raise_()
+
+        self.cb11 = QCheckBox("luminance_sd", self.centralwidget)
+        self.cb11.setGeometry(QRect(875, 607, 151, 25))
+        self.cb11.stateChanged.connect(lambda:checkbox_check(self.cb11))
+        self.cb11.setChecked(True)
+        self.cb11.raise_()
+
+        self.cb12 = QCheckBox("wave", self.centralwidget)
+        self.cb12.setGeometry(QRect(1000, 607, 151, 25))
+        self.cb12.stateChanged.connect(lambda:checkbox_check(self.cb12))
+        self.cb12.setChecked(True)
+        self.cb12.raise_()
+
+        self.cb13 = QCheckBox("contour_density", self.centralwidget)
+        self.cb13.setGeometry(QRect(875, 625, 151, 25))
+        self.cb13.stateChanged.connect(lambda:checkbox_check(self.cb13))
+        self.cb13.setChecked(True)
+        self.cb13.raise_()
+
+        self.cb14 = QCheckBox("contour_congestion", self.centralwidget)
+        self.cb14.setGeometry(QRect(1000, 625, 151, 25))
+        self.cb14.stateChanged.connect(lambda:checkbox_check(self.cb14))
+        self.cb14.setChecked(True)
+        self.cb14.raise_()
+
+        self.cb15 = QCheckBox("pixel_symmetry", self.centralwidget)
+        self.cb15.setGeometry(QRect(875, 643, 151, 25))
+        self.cb15.stateChanged.connect(lambda:checkbox_check(self.cb15))
+        self.cb15.setChecked(True)
+        self.cb15.raise_()
+
+        self.cb16 = QCheckBox("quadtree_decomposition", self.centralwidget)
+        self.cb16.setGeometry(QRect(1000, 643, 151, 25))
+        self.cb16.stateChanged.connect(lambda:checkbox_check(self.cb16))
+        self.cb16.setChecked(True)
+        self.cb16.raise_()
+
+        # Button Actions
         self.pushButton_1.clicked.connect(save_subtree)  # Cut UI's
         self.pushButton_2.clicked.connect(load_data_for_model)  # Load UI Data
         self.pushButton_3.clicked.connect(generateModel)  # Generate Model
         self.pushButton_4.clicked.connect(generate_categories)  # Generate Categories
         self.pushButton_5.clicked.connect(generate_generators)  # Generate Generators
         self.pushButton_6.clicked.connect(generate_uis)  # Generate UI Suggestions
-        self.pushButton_7.clicked.connect(use_own_data_set)  # Use own Data Set
-        self.pushButton_8.clicked.connect(calc_with_metrics)  # Start recalculation
+        self.pushButton_7.clicked.connect(edit_data)  # Open the project folder to edit the existing data
+        self.pushButton_8.clicked.connect(calc_with_metrics)  # Start metric calculation
         self.pushButton_9.clicked.connect(open_parser_window)  # Start open_parser_window
-        self.pushButton_10.clicked.connect(cancle_calc_with_metrics)  # Start calc_with_metrics
+        self.pushButton_10.clicked.connect(cancel_calc_with_metrics)  # Start calc_with_metrics
+        self.pushButton_11.clicked.connect(lambda:metrics_ok(self.if1))  # Save new metrics Accuracy
 
         # Actions
         self.action_ueber = QAction(mainWindow)
@@ -325,8 +353,6 @@ class Ui_mainWindow(object):
         self.line_3.setFrameShape(QFrame.VLine)
         self.line_3.setFrameShadow(QFrame.Sunken)
         self.line_3.raise_()
-
-
 
         # MenuBar
         self.menubar = QMenuBar(mainWindow)
@@ -379,7 +405,8 @@ class Ui_mainWindow(object):
         self.pushButton_7.setText(QCoreApplication.translate("mainWindow", u"Use own Data-Set", None))
         self.pushButton_8.setText(QCoreApplication.translate("mainWindow", u"Calculate Metrics", None))
         self.pushButton_9.setText(QCoreApplication.translate("mainWindow", u"*.li Parser", None))
-        self.pushButton_10.setText(QCoreApplication.translate("mainWindow", u"Cancle Metric-Calculation", None))
+        self.pushButton_10.setText(QCoreApplication.translate("mainWindow", u"Cancel Metric-Calculation", None))
+        self.pushButton_11.setText(QCoreApplication.translate("mainWindow", u"OK", None))
 
         self.pushButton_1.setStatusTip("Cut the existing Screenshots into a specified substructure")
         self.pushButton_2.setStatusTip("Prepare the cutted user interface elements for the neural network")
@@ -387,12 +414,13 @@ class Ui_mainWindow(object):
         self.pushButton_4.setStatusTip("Generate pairs (using the model) from the individual cropped user interface elements and categorize them")
         self.pushButton_5.setStatusTip("Generate GAN-Generator")
         self.pushButton_6.setStatusTip("Create new inspiring user interfaces with the help of the generator")
-        self.pushButton_7.setStatusTip("Open a folder where you can insert your own Screenshots. These will be used for future calculations")
-        self.pushButton_8.setStatusTip("The generated images are checked with various metrics")
+        self.pushButton_7.setStatusTip("Open the project folder to adjust the basic image structure")
+        self.pushButton_8.setStatusTip("The generated images are checked with choosen metrics")
         self.pushButton_9.setStatusTip("Select a .li file and parse it into a .json file")
-        self.pushButton_10.setStatusTip("Cancle Metric-Calculation")
+        self.pushButton_10.setStatusTip("Cancel Metric-Calculation")
+        self.pushButton_11.setStatusTip("Save new metrics Accuracy")
 
-
+        self.if1.setStatusTip("Insert a new Accuracy-value for future metric calculations")
 
 # Create a "about" Message-Box
 def about():
@@ -409,6 +437,96 @@ def about():
         "<p><b>Prof. Dr. Matthias Böhmer</b> <br>matthias.boehmer@th-koeln.de</p>"
         "<p><b>David Petersen</b> <br>david.petersen@th-koeln.de</p>",
     )
+
+# Check checkbox-state
+def checkbox_check(cb):
+    if cb.text() == "distinct_rgb_values":
+        if cb.isChecked() == True:
+            metrics_check.distinct_rgb_values = True
+        else:
+            metrics_check.distinct_rgb_values = False
+    elif cb.text() == "figure_ground_contrast":
+        if cb.isChecked() == True:
+            metrics_check.figure_ground_contrast = True
+        else:
+            metrics_check.figure_ground_contrast = False
+    elif cb.text() == "white_space":
+        if cb.isChecked() == True:
+            metrics_check.white_space = True
+        else:
+            metrics_check.white_space = False
+    elif cb.text() == "grid_quality":
+        if cb.isChecked() == True:
+            metrics_check.grid_quality = True
+        else:
+            metrics_check.grid_quality = False
+    elif cb.text() == "colourfulness":
+        if cb.isChecked() == True:
+            metrics_check.colourfulness = True
+        else:
+            metrics_check.colourfulness = False
+    elif cb.text() == "hsv_colours":
+        if cb.isChecked() == True:
+            metrics_check.hsv_colours = True
+        else:
+            metrics_check.hsv_colours = False
+    elif cb.text() == "hsv_unique":
+        if cb.isChecked() == True:
+            metrics_check.hsv_unique = True
+        else:
+            metrics_check.hsv_unique = False
+    elif cb.text() == "lab_avg":
+        if cb.isChecked() == True:
+            metrics_check.lab_avg = True
+        else:
+            metrics_check.lab_avg = False
+    elif cb.text() == "static_colour_clusters":
+        if cb.isChecked() == True:
+            metrics_check.static_colour_clusters = True
+        else:
+            metrics_check.static_colour_clusters = False
+    elif cb.text() == "dynamic_colour_clusters":
+        if cb.isChecked() == True:
+            metrics_check.dynamic_colour_clusters = True
+        else:
+            metrics_check.dynamic_colour_clusters = False
+    elif cb.text() == "luminance_sd":
+        if cb.isChecked() == True:
+            metrics_check.luminance_sd = True
+        else:
+            metrics_check.luminance_sd = False
+    elif cb.text() == "wave":
+        if cb.isChecked() == True:
+            metrics_check.wave = True
+        else:
+            metrics_check.wave = False
+    elif cb.text() == "contour_density":
+        if cb.isChecked() == True:
+            metrics_check.contour_density = True
+        else:
+            metrics_check.contour_density = False
+    elif cb.text() == "contour_congestion":
+        if cb.isChecked() == True:
+            metrics_check.contour_congestion = True
+        else:
+            metrics_check.contour_congestion = False
+    elif cb.text() == "pixel_symmetry":
+        if cb.isChecked() == True:
+            metrics_check.pixel_symmetry = True
+        else:
+            metrics_check.pixel_symmetry = False
+    elif cb.text() == "quadtree_decomposition":
+        if cb.isChecked() == True:
+            metrics_check.quadtree_decomposition = True
+        else:
+            metrics_check.quadtree_decomposition = False
+
+
+# Open the project folder to edit the existing data
+def edit_data():
+    path = r".\folders"
+    path = os.path.realpath(path)
+    os.startfile(path)
 
 # Method for changing label images
 # for example: image1 = u"image.png"
@@ -447,25 +565,6 @@ def generate_categories():
     print("Generate Categories Button clicked!")
     get_style_embeddings(models_torch_dir, app_details_csv, categories_app_emb, cutted_ui_elements, cutted_resized_ui_elements)
 
-def use_own_data_set():
-    print("Use own Data Set Button clicked!")
-    path = "C:\\Users\\Marvin\\Desktop\\HierAblegen"
-    path = os.path.realpath(path)
-    os.startfile(path)
-
-def choose_xml_file():
-    print("Choose .xml file Button clicked!")
-
-    choosenXMLFile = fd.askopenfilename(
-        title="Select .xml file to focus from the project folder...",
-        filetypes=[('.xml files', '.xml')])
-    xmldoc = minidom.parse(choosenXMLFile)
-    print("########## XML-FILE ##########")
-    print(xmldoc.toxml())
-
-def start_recalculation():
-    print("Start recalculation Button clicked!")
-
 def open_parser_window():
     root = tkinter.Tk()
     root.withdraw()
@@ -488,7 +587,7 @@ def threaded_function(arg):
     positionOnLayout = 0
     first_start_check_metrics = True
     for i in range(arg):
-        print("calc_with_metrics")
+        print("Calculate metrics")
         root_dir = r".\folders\results"
 
         results = list(Path(root_dir).rglob("**/*.jpg"))
@@ -497,25 +596,25 @@ def threaded_function(arg):
             if(positionOnLayout > 3):
                 positionOnLayout = 0
 
-            print(result)
+            print(str("Next image: ") + str(result))
             from deepux1_metrics import metrics_check
             pathtest = "..\\..\\..\\" + str(result)
 
             if (positionOnLayout == 0):
-                uiObj.label_1.setText("LOADING")
+                uiObj.label_1.setPixmap(QPixmap(r".\resources\images/loading.png"))
             elif (positionOnLayout == 1):
-                uiObj.label_2.setText("LOADING")
+                uiObj.label_1.setPixmap(QPixmap(r".\resources\images/loading.png"))
             elif (positionOnLayout == 2):
-                uiObj.label_3.setText("LOADING")
+                uiObj.label_1.setPixmap(QPixmap(r".\resources\images/loading.png"))
             elif (positionOnLayout == 3):
-                uiObj.label_4.setText("LOADING")
+                uiObj.label_1.setPixmap(QPixmap(r".\resources\images/loading.png"))
 
-            evaluation_percentage = metrics_check.check_metrics(pathtest,first_start_check_metrics)
+            evaluation_percentage = metrics_check.check_metrics(pathtest, first_start_check_metrics)
             first_start_check_metrics = False
 
 
             if (evaluation_percentage > 54):
-                print("add to ui")
+                print("Add image to ui...")
                 if (positionOnLayout == 0):
                     uiObj.label_1.setPixmap(QPixmap(str(pathtest)))
                 elif (positionOnLayout == 1):
@@ -525,18 +624,24 @@ def threaded_function(arg):
                 elif (positionOnLayout == 3):
                     uiObj.label_4.setPixmap(QPixmap(str(pathtest)))
 
-                print("positionOnLayout1" + str(positionOnLayout))
+                print("Position on Layout 1" + str(positionOnLayout))
                 positionOnLayout = positionOnLayout + 1
-                print("positionOnLayout2" + str(positionOnLayout))
+                print("Position on Layout 2" + str(positionOnLayout))
+                print("")
 
 def calc_with_metrics():
-
     thread = Thread(target=threaded_function, args=(10,))
     thread.start()
 
-def cancle_calc_with_metrics():
-    ## TODO Interrupt thread
+def cancel_calc_with_metrics():
+    # TODO Interrupt thread
     print("TODO Interrupt thread")
+
+# Save new metrics-value
+def metrics_ok(if1):
+    print(metrics_check.Accuracy)
+    metrics_check.Accuracy = if1.text()
+    print(metrics_check.Accuracy)
 
 if __name__ == '__main__':
     # Console-call
