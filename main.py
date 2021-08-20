@@ -402,7 +402,7 @@ class Ui_mainWindow(object):
         self.pushButton_4.setText(QCoreApplication.translate("mainWindow", u"Generate Categories", None))
         self.pushButton_5.setText(QCoreApplication.translate("mainWindow", u"Generate Generators", None))
         self.pushButton_6.setText(QCoreApplication.translate("mainWindow", u"Generate UI Suggestions", None))
-        self.pushButton_7.setText(QCoreApplication.translate("mainWindow", u"Use own Data-Set", None))
+        self.pushButton_7.setText(QCoreApplication.translate("mainWindow", u"Edit Program-Data", None))
         self.pushButton_8.setText(QCoreApplication.translate("mainWindow", u"Calculate Metrics", None))
         self.pushButton_9.setText(QCoreApplication.translate("mainWindow", u"*.li Parser", None))
         self.pushButton_10.setText(QCoreApplication.translate("mainWindow", u"Cancel Metric-Calculation", None))
@@ -603,11 +603,11 @@ def threaded_function(arg):
             if (positionOnLayout == 0):
                 uiObj.label_1.setPixmap(QPixmap(r".\resources\images/loading.png"))
             elif (positionOnLayout == 1):
-                uiObj.label_1.setPixmap(QPixmap(r".\resources\images/loading.png"))
+                uiObj.label_2.setPixmap(QPixmap(r".\resources\images/loading.png"))
             elif (positionOnLayout == 2):
-                uiObj.label_1.setPixmap(QPixmap(r".\resources\images/loading.png"))
+                uiObj.label_3.setPixmap(QPixmap(r".\resources\images/loading.png"))
             elif (positionOnLayout == 3):
-                uiObj.label_1.setPixmap(QPixmap(r".\resources\images/loading.png"))
+                uiObj.label_4.setPixmap(QPixmap(r".\resources\images/loading.png"))
 
             evaluation_percentage = metrics_check.check_metrics(pathtest, first_start_check_metrics)
             first_start_check_metrics = False
@@ -640,7 +640,7 @@ def cancel_calc_with_metrics():
 # Save new metrics-value
 def metrics_ok(if1):
     print(metrics_check.Accuracy)
-    metrics_check.Accuracy = if1.text()
+    metrics_check.Accuracy = int(if1.text())
     print(metrics_check.Accuracy)
 
 if __name__ == '__main__':
