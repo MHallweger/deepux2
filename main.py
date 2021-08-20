@@ -2,10 +2,7 @@ import os
 import sys
 import tkinter
 from tkinter import filedialog
-from turtle import fd
 import cv2
-import glob
-from PIL import Image
 from pathlib import Path
 from threading import Thread
 
@@ -14,6 +11,9 @@ from PySide2.QtCore import QRect, QSize, QCoreApplication, QMetaObject
 from PySide2.QtGui import QIcon, QFont, Qt, QPixmap, QMovie
 from PySide2.QtWidgets import QLabel, QPushButton, QWidget, QFrame, QStatusBar, QSizePolicy, QAction, QProgressBar, \
     QMenuBar, QMenu, QMessageBox, QHBoxLayout, QCheckBox, QLineEdit
+
+from PySide2.QtCore import *
+from PySide2.QtGui import *
 
 from GUIGAN_main import build_result_uis
 import build_generator
@@ -45,7 +45,6 @@ results_dir = r'.\folders\results'
 results_pre_dir = r'.\folders\results_pre'
 li_files = r'.\folders\li_files'
 
-
 # UI
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
@@ -72,6 +71,7 @@ class Ui_mainWindow(object):
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
+
         font1 = QFont()
         font1.setFamily(u"MS Shell Dlg 2")
         font1.setPointSize(18)
@@ -80,6 +80,7 @@ class Ui_mainWindow(object):
         font1.setUnderline(False)
         font1.setWeight(50)
         font1.setKerning(True)
+
         font2 = QFont()
         font2.setFamily(u"MS Shell Dlg 2")
         font2.setPointSize(18)
@@ -93,30 +94,34 @@ class Ui_mainWindow(object):
         self.label_1.setObjectName(u"label_1")
         self.label_1.setGeometry(QRect(10, 10, 271, 451))
         self.label_1.setStyleSheet(u"")
-        self.label_1.setPixmap(QPixmap(u"resources/images/Screenshot_1624995967.png"))
+        self.label_1.setPixmap(QPixmap(u"resources/images/Standard_1.png"))
         self.label_1.setScaledContents(True)
         self.label_1.raise_()
+
         self.label_2 = QLabel(self.centralwidget)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setGeometry(QRect(290, 10, 271, 451))
         self.label_2.setStyleSheet(u"")
         self.label_2.raise_()
-        self.label_2.setPixmap(QPixmap(u"resources/images/Screenshot_1624995967.png"))
+        self.label_2.setPixmap(QPixmap(u"resources/images/Standard_2.png"))
         self.label_2.setScaledContents(True)
+
         self.label_3 = QLabel(self.centralwidget)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setGeometry(QRect(570, 10, 271, 451))
         self.label_3.setStyleSheet(u"")
-        self.label_3.setPixmap(QPixmap(u"resources/images/Screenshot_1624995967.png"))
+        self.label_3.setPixmap(QPixmap(u"resources/images/Standard_3.png"))
         self.label_3.setScaledContents(True)
         self.label_3.raise_()
+
         self.label_4 = QLabel(self.centralwidget)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setGeometry(QRect(850, 10, 271, 451))
         self.label_4.setStyleSheet(u"")
-        self.label_4.setPixmap(QPixmap(u"resources/images/Screenshot_1624995967.png"))
+        self.label_4.setPixmap(QPixmap(u"resources/images/Standard_4.png"))
         self.label_4.setScaledContents(True)
         self.label_4.raise_()
+
         self.label_5 = QLabel(self.centralwidget)
         self.label_5.setObjectName(u"label_5")
         self.label_5.setGeometry(QRect(10, 490, 1111, 131))
@@ -125,6 +130,7 @@ class Ui_mainWindow(object):
         self.label_5.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
         self.label_5.setWordWrap(True)
         self.label_5.raise_()
+
         self.label_6 = QLabel(self.centralwidget)
         self.label_6.setObjectName(u"label_6")
         self.label_6.setGeometry(QRect(22, 490, 101, 31))
@@ -133,6 +139,7 @@ class Ui_mainWindow(object):
         self.label_6.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
         self.label_6.setWordWrap(True)
         self.label_6.raise_()
+
         self.label_7 = QLabel(self.centralwidget)
         self.label_7.setObjectName(u"label_7")
         self.label_7.setGeometry(QRect(532, 490, 191, 31))
@@ -142,9 +149,37 @@ class Ui_mainWindow(object):
         self.label_7.setWordWrap(True)
         self.label_7.raise_()
 
+        self.label_8 = QLabel(self.centralwidget)
+        self.label_8.setGeometry(QRect(115, 180, 271, 200))
+        self.label_8.hide()
+        self.label_8.raise_()
+
+        self.label_9 = QLabel(self.centralwidget)
+        self.label_9.setGeometry(QRect(395, 180, 271, 200))
+        self.label_9.hide()
+        self.label_9.raise_()
+
+        self.label_10 = QLabel(self.centralwidget)
+        self.label_10.setGeometry(QRect(675, 180, 271, 200))
+        self.label_10.hide()
+        self.label_10.raise_()
+
+        self.label_11 = QLabel(self.centralwidget)
+        self.label_11.setGeometry(QRect(955, 180, 271, 200))
+        self.label_11.hide()
+        self.label_11.raise_()
+
         # Icons
         icon = QIcon()
         icon.addFile(u"resources/images/information-button.png", QSize(), QIcon.Normal, QIcon.Off)
+
+        # Gifs
+        self.movie = QMovie(u"resources/images/loading.gif")
+        self.label_8.setMovie(self.movie)
+        self.label_9.setMovie(self.movie)
+        self.label_10.setMovie(self.movie)
+        self.label_11.setMovie(self.movie)
+        self.movie.start()
 
         # Label-Icons
         self.label_icon_1 = QLabel(self.centralwidget)
@@ -168,26 +203,32 @@ class Ui_mainWindow(object):
         self.pushButton_1.setObjectName(u"pushButton_1")
         self.pushButton_1.setGeometry(QRect(20, 535, 131, 51))
         self.pushButton_1.raise_()
+
         self.pushButton_2 = QPushButton(self.centralwidget)
         self.pushButton_2.setObjectName(u"pushButton_2")
         self.pushButton_2.setGeometry(QRect(180, 535, 131, 51))
         self.pushButton_2.raise_()
+
         self.pushButton_3 = QPushButton(self.centralwidget)
         self.pushButton_3.setObjectName(u"pushButton_3")
         self.pushButton_3.setGeometry(QRect(340, 535, 131, 51))
         self.pushButton_3.raise_()
+
         self.pushButton_4 = QPushButton(self.centralwidget)
         self.pushButton_4.setObjectName(u"pushButton_4")
         self.pushButton_4.setGeometry(QRect(20, 610, 131, 51))
         self.pushButton_4.raise_()
+
         self.pushButton_5 = QPushButton(self.centralwidget)
         self.pushButton_5.setObjectName(u"pushButton_5")
         self.pushButton_5.setGeometry(QRect(180, 610, 131, 51))
         self.pushButton_5.raise_()
+
         self.pushButton_6 = QPushButton(self.centralwidget)
         self.pushButton_6.setObjectName(u"pushButton_6")
         self.pushButton_6.setGeometry(QRect(340, 610, 131, 51))
         self.pushButton_6.raise_()
+
         self.pushButton_7 = QPushButton(self.centralwidget)
         self.pushButton_7.setObjectName(u"pushButton_7")
         self.pushButton_7.setGeometry(QRect(532, 535, 151, 51))
@@ -332,7 +373,7 @@ class Ui_mainWindow(object):
         self.pushButton_8.clicked.connect(calc_with_metrics)  # Start metric calculation
         self.pushButton_9.clicked.connect(open_parser_window)  # Start open_parser_window
         self.pushButton_10.clicked.connect(cancel_calc_with_metrics)  # Start calc_with_metrics
-        self.pushButton_11.clicked.connect(lambda:metrics_ok(self.if1))  # Save new metrics Accuracy
+        self.pushButton_11.clicked.connect(lambda: metrics_ok(self.if1))  # Save new metrics Accuracy
 
         # Actions
         self.action_ueber = QAction(mainWindow)
@@ -347,6 +388,7 @@ class Ui_mainWindow(object):
         self.line_2.setFrameShape(QFrame.HLine)
         self.line_2.setFrameShadow(QFrame.Sunken)
         self.line_2.raise_()
+
         self.line_3 = QFrame(self.centralwidget)
         self.line_3.setObjectName(u"line_3")
         self.line_3.setGeometry(QRect(501, 472, 20, 311))
@@ -406,7 +448,7 @@ class Ui_mainWindow(object):
         self.pushButton_8.setText(QCoreApplication.translate("mainWindow", u"Calculate Metrics", None))
         self.pushButton_9.setText(QCoreApplication.translate("mainWindow", u"*.li Parser", None))
         self.pushButton_10.setText(QCoreApplication.translate("mainWindow", u"Cancel Metric-Calculation", None))
-        self.pushButton_11.setText(QCoreApplication.translate("mainWindow", u"OK", None))
+        self.pushButton_11.setText(QCoreApplication.translate("mainWindow", u"Save", None))
 
         self.pushButton_1.setStatusTip("Cut the existing Screenshots into a specified substructure")
         self.pushButton_2.setStatusTip("Prepare the cutted user interface elements for the neural network")
@@ -415,12 +457,37 @@ class Ui_mainWindow(object):
         self.pushButton_5.setStatusTip("Generate GAN-Generator")
         self.pushButton_6.setStatusTip("Create new inspiring user interfaces with the help of the generator")
         self.pushButton_7.setStatusTip("Open the project folder to adjust the basic image structure")
-        self.pushButton_8.setStatusTip("The generated images are checked with choosen metrics")
+        self.pushButton_8.setStatusTip("Check the generated images with chosen metrics")
         self.pushButton_9.setStatusTip("Select a .li file and parse it into a .json file")
         self.pushButton_10.setStatusTip("Cancel Metric-Calculation")
         self.pushButton_11.setStatusTip("Save new metrics Accuracy")
 
         self.if1.setStatusTip("Insert a new Accuracy-value for future metric calculations")
+
+def save_subtree():
+    print("Cut UI's Button clicked!")
+    save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements, cutted_resized_ui_elements)
+
+def load_data_for_model():
+    print("Load UI Data Button clicked!")
+    load_data(cutted_resized_ui_elements,data_dir)
+    load_subtrees(cutted_resized_ui_elements,data_dir)
+
+def generateModel():
+    print("Generate Model Button clicked!")
+    train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir)
+
+def generate_generators():
+    print("Generate Generators Button clicked!")
+    build_generator.build_generator(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
+
+def generate_uis():
+    print("Generate UI Suggestions Button clicked!")
+    build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
+
+def generate_categories():
+    print("Generate Categories Button clicked!")
+    get_style_embeddings(models_torch_dir, app_details_csv, categories_app_emb, cutted_ui_elements, cutted_resized_ui_elements)
 
 # Create a "about" Message-Box
 def about():
@@ -528,49 +595,13 @@ def edit_data():
     path = os.path.realpath(path)
     os.startfile(path)
 
-# Method for changing label images
-# for example: image1 = u"image.png"
-def insert_label_images(self, image1, image2, image3, image4):
-    if image1 is not None:
-        self.label_1.setPixmap(QPixmap(image1))
-    if image2 is not None:
-        self.label_2.setPixmap(QPixmap(image2))
-    if image3 is not None:
-        self.label_3.setPixmap(QPixmap(image3))
-    if image4 is not None:
-        self.label_4.setPixmap(QPixmap(image4))
-
-def save_subtree():
-    print("Cut UI's Button clicked!")
-    save_subtree_info(json_rico, gui_dir_rico, gui_information_dir, control_elements_id_dir, cutted_ui_elements, cutted_resized_ui_elements)
-
-def load_data_for_model():
-    print("Load UI Data Button clicked!")
-    load_data(cutted_resized_ui_elements,data_dir)
-    load_subtrees(cutted_resized_ui_elements,data_dir)
-
-def generateModel():
-    print("Generate Model Button clicked!")
-    train_siamese(cutted_resized_ui_elements,data_dir,models_torch_dir)
-
-def generate_generators():
-    print("Generate Generators Button clicked!")
-    build_generator.build_generator(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,cutted_ui_elements,cutted_resized_ui_elements)
-
-def generate_uis():
-    print("Generate UI Suggestions Button clicked!")
-    build_result_uis(app_details_csv,models_dir,gui_information_dir,control_elements_id_dir,categories_app_emb,results_dir,results_pre_dir,cutted_ui_elements,cutted_resized_ui_elements)
-
-def generate_categories():
-    print("Generate Categories Button clicked!")
-    get_style_embeddings(models_torch_dir, app_details_csv, categories_app_emb, cutted_ui_elements, cutted_resized_ui_elements)
-
 def open_parser_window():
     root = tkinter.Tk()
     root.withdraw()
     file_path = filedialog.askopenfilename()
-    parse_li_to_json(file_path)
-    print(file_path)
+    if file_path != "":
+        parse_li_to_json(file_path)
+        print(file_path)
 
 def load_images_from_folder(folder):
     images = []
@@ -587,7 +618,7 @@ def threaded_function(arg):
     positionOnLayout = 0
     first_start_check_metrics = True
     for i in range(arg):
-        print("Calculate metrics")
+        print("Calculate metrics...")
         root_dir = r".\folders\results"
 
         results = list(Path(root_dir).rglob("**/*.jpg"))
@@ -596,56 +627,60 @@ def threaded_function(arg):
             if(positionOnLayout > 3):
                 positionOnLayout = 0
 
+            print("")
             print(str("Next image: ") + str(result))
             from deepux1_metrics import metrics_check
             pathtest = "..\\..\\..\\" + str(result)
 
             if (positionOnLayout == 0):
-                uiObj.label_1.setPixmap(QPixmap(r".\resources\images/loading.png"))
+                uiObj.label_8.show()
             elif (positionOnLayout == 1):
-                uiObj.label_2.setPixmap(QPixmap(r".\resources\images/loading.png"))
+                uiObj.label_9.show()
             elif (positionOnLayout == 2):
-                uiObj.label_3.setPixmap(QPixmap(r".\resources\images/loading.png"))
+                uiObj.label_10.show()
             elif (positionOnLayout == 3):
-                uiObj.label_4.setPixmap(QPixmap(r".\resources\images/loading.png"))
+                uiObj.label_11.show()
 
             evaluation_percentage = metrics_check.check_metrics(pathtest, first_start_check_metrics)
             first_start_check_metrics = False
 
 
-            if (evaluation_percentage > 54):
+            if (evaluation_percentage > metrics_check.Accuracy):
                 print("Add image to ui...")
                 if (positionOnLayout == 0):
                     uiObj.label_1.setPixmap(QPixmap(str(pathtest)))
+                    uiObj.label_8.hide()
                 elif (positionOnLayout == 1):
                     uiObj.label_2.setPixmap(QPixmap(str(pathtest)))
+                    uiObj.label_9.hide()
                 elif (positionOnLayout == 2):
                     uiObj.label_3.setPixmap(QPixmap(str(pathtest)))
+                    uiObj.label_10.hide()
                 elif (positionOnLayout == 3):
                     uiObj.label_4.setPixmap(QPixmap(str(pathtest)))
+                    uiObj.label_11.hide()
 
                 print("Position on Layout 1" + str(positionOnLayout))
                 positionOnLayout = positionOnLayout + 1
                 print("Position on Layout 2" + str(positionOnLayout))
-                print("")
 
 def calc_with_metrics():
     thread = Thread(target=threaded_function, args=(10,))
     thread.start()
 
 def cancel_calc_with_metrics():
-    # TODO Interrupt thread
-    print("TODO Interrupt thread")
+    # TODO: Cancel Thread
+    print("TODO: Implement a way to cancel thread")
 
 # Save new metrics-value
 def metrics_ok(if1):
-    print(metrics_check.Accuracy)
+    print("Old Accuracy: " + str(metrics_check.Accuracy))
     metrics_check.Accuracy = int(if1.text())
-    print(metrics_check.Accuracy)
+    print("Accuracy changed! New Accuracy: " + str(metrics_check.Accuracy))
 
 if __name__ == '__main__':
     # Console-call
-    # Call. python main.py [function]
+    # Call: python main.py [function]
     fire.Fire(Ui_mainWindow)
 
     if not os.path.exists(json_rico):
@@ -683,8 +718,6 @@ if __name__ == '__main__':
 
     if not os.path.exists(li_files):
         os.makedirs(li_files)
-
-
 
     # Build UI
     app = QtWidgets.QApplication(sys.argv)

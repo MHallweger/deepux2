@@ -74,12 +74,14 @@ def check_metrics(image_name, firstStart):
         print("Best possible value to be achieved: " + str(best_possible_evaluation_amount))
         print("Achieved value: " + str(evaluation_amount))
         print("Result: This image is good!" + str(" (") + str("{:.2f}".format(evaluation_percentage)) + str("%)"))
+        evaluation_list.clear()
         return evaluation_percentage
     else:
         print("Selected percentage-value: " + str(Accuracy))
         print("Best possible value to be achieved: " + str(best_possible_evaluation_amount))
         print("Achieved value: " + str(evaluation_amount))
         print("Result: This image is bad!" + str(" (") + str("{:.2f}".format(evaluation_percentage)) + str("%)"))
+        evaluation_list.clear()
         return evaluation_percentage
 
 
