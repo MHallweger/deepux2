@@ -3,7 +3,7 @@ An application that supports mobile UI developers/designers during the design pr
 The application extracts the individual sections of an application from an existing data set of app screenshots. These are then optimally reassembled into individual screenshots/suggestions based on an AI (SeqGAN).
 
 ## Current UI of the tool
-![Current UI of the tool](images/UI_aktuell.png)
+![Current UI of the tool](images/UI_aktuell.PNG)
 
 ## How does a GAN work?
 ![GAN](images/GAN.png)
