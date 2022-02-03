@@ -5,5 +5,3 @@ An application that supports mobile UI developers/designers during the design pr
 ![](images/Fig5.JPG)
 ![](images/Fig1_v2.JPG)
 ![](images/Display1.JPG)
-![](images/UI aktuell.PNG)
-
